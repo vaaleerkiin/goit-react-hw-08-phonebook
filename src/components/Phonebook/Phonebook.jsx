@@ -15,12 +15,14 @@ export class Phonebook extends Component {
     ],
     filter: '',
   };
+
   formatNumber = number => {
     number = String(number);
     return (
       number.slice(0, 3) + '-' + number.slice(3, 5) + '-' + number.slice(5, 9)
     );
   };
+
   handleSubmit = ({ name, number }) => {
     this.setState(prevState => {
       if (
