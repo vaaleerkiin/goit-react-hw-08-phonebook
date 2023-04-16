@@ -24,7 +24,7 @@ export const PhonebookForm = ({ onSubmit }) => {
         </label>
         <label>
           Number
-          <Field type="tel" name="number" />
+          <Field type="number" name="number" />
           <ErrorMessage name="number" render={msg => <div>{msg}</div>} />
         </label>
         <button type="submit">Add contact</button>
