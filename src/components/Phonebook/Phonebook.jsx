@@ -46,7 +46,6 @@ export class Phonebook extends Component {
   };
 
   visibleContacts = () => {
-    console.log(this.state.contacts);
     return [...this.state.contacts].filter(({ name }) =>
       name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
