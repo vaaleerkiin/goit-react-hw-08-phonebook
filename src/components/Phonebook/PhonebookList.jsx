@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export const PhonebookList = ({ contacts, onClick }) => {
   if (!contacts.length) {
     return;
@@ -14,4 +15,13 @@ export const PhonebookList = ({ contacts, onClick }) => {
       ))}
     </ul>
   );
+};
+PhonebookList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };

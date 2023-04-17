@@ -1,5 +1,6 @@
 import { Forms } from 'components/Phonebook/Phonebook.styled';
 import { Formik, Field, ErrorMessage } from 'formik';
+import PropTypes from 'prop-types';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -32,3 +33,5 @@ export const PhonebookForm = ({ onSubmit }) => {
     </Formik>
   );
 };
+
+PhonebookForm.propTypes = { onSubmit: PropTypes.func.isRequired };
