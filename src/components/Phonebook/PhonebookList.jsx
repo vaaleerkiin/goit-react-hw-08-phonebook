@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 export const PhonebookList = ({ contacts, onClick }) => {
   if (!contacts.length) {
     return;
