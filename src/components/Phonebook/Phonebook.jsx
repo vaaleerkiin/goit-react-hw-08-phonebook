@@ -1,90 +1,79 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PhonebookForm } from 'components/Phonebook/PhonebookForm';
 import { PhonebookList } from 'components/Phonebook/PhonebookList';
 import { PhonebookFilter } from 'components/Phonebook/PhonebookFilter';
 import { PhonebookWrap } from 'components/Phonebook/Phonebook.styled';
 import { nanoid } from 'nanoid';
 const LOCAL_KEY = 'contacts';
-export class Phonebook extends Component {
-  state = {
-    contacts: [
-      // { id: nanoid(10), name: 'Rosie Simpson', number: '459-12-56' },
-      // { id: nanoid(10), name: 'Hermione Kline', number: '443-89-12' },
-      // { id: nanoid(10), name: 'Eden Clements', number: '645-17-79' },
-      // { id: nanoid(10), name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  };
-
-  componentDidMount = () => {
+export const Phonebook = () => {
+  const [contacts, setContacts] = useState([
+    // { id: nanoid(10), name: 'Rosie Simpson', number: '459-12-56' },
+    // { id: nanoid(10), name: 'Hermione Kline', number: '443-89-12' },
+    // { id: nanoid(10), name: 'Eden Clements', number: '645-17-79' },
+    // { id: nanoid(10), name: 'Annie Copeland', number: '227-91-26' },
+  ]);
+  const [filter, setFilter] = useState('');
+  const firstLoad = useRef(true);
+  useEffect(() => {
     if (localStorage.getItem(LOCAL_KEY)) {
       const contacts = JSON.parse(localStorage.getItem(LOCAL_KEY));
-      this.setState({ contacts });
+      setContacts(contacts);
     }
-  };
+  }, []);
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(this.state.contacts));
+  useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
     }
-  };
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(contacts));
+  }, [contacts]);
 
-  formatNumber = number => {
-    number = String(number);
-    return (
-      number.slice(0, 3) + '-' + number.slice(3, 5) + '-' + number.slice(5, 9)
-    );
-  };
-
-  handleSubmit = ({ name, number }) => {
-    this.setState(prevState => {
+  const handleSubmit = ({ name, number }) => {
+    setContacts(prevState => {
       if (
-        prevState.contacts.some(el =>
-          el.name.toLowerCase().includes(name.toLowerCase())
-        )
+        prevState.some(el => el.name.toLowerCase().includes(name.toLowerCase()))
       ) {
-        return alert(`${name} is alreadyin contacts`);
+        alert(`${name} is alreadyin contacts`);
+        return [...prevState];
       } else
-        return {
-          contacts: [
-            ...prevState.contacts,
-            { id: nanoid(10), name, number: this.formatNumber(number) },
-          ],
-        };
+        return [
+          ...prevState,
+          { id: nanoid(10), name, number: formatNumber(number) },
+        ];
     });
   };
 
-  handleChange = e => {
-    this.setState({ filter: e.currentTarget.value });
+  const handleChange = e => {
+    setFilter(e.currentTarget.value);
   };
 
-  visibleContacts = () => {
-    return [...this.state.contacts].filter(({ name }) =>
-      name.toLowerCase().includes(this.state.filter.toLowerCase())
+  const visibleContacts = () => {
+    return [...contacts].filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
-  deleteById = elId => {
-    this.setState(prevState => {
-      return {
-        contacts: [...prevState.contacts].filter(({ id }) => elId !== id),
-      };
+  const deleteById = elId => {
+    setContacts(prevState => {
+      return [...prevState].filter(({ id }) => elId !== id);
     });
   };
 
-  render() {
-    const { filter } = this.state;
-    return (
-      <PhonebookWrap>
-        <h2>Phonebook</h2>
-        <PhonebookForm onSubmit={this.handleSubmit}></PhonebookForm>
-        <h2>Contacts</h2>
-        <PhonebookFilter value={filter} onChange={this.handleChange} />
-        <PhonebookList
-          onClick={this.deleteById}
-          contacts={this.visibleContacts()}
-        />
-      </PhonebookWrap>
-    );
-  }
-}
+  return (
+    <PhonebookWrap>
+      <h2>Phonebook</h2>
+      <PhonebookForm onSubmit={handleSubmit}></PhonebookForm>
+      <h2>Contacts</h2>
+      <PhonebookFilter value={filter} onChange={handleChange} />
+      <PhonebookList onClick={deleteById} contacts={visibleContacts()} />
+    </PhonebookWrap>
+  );
+};
+
+const formatNumber = number => {
+  number = String(number);
+  return (
+    number.slice(0, 3) + '-' + number.slice(3, 5) + '-' + number.slice(5, 9)
+  );
+};
