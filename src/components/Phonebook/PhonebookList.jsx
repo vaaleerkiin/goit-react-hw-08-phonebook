@@ -1,28 +1,34 @@
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeContacts } from 'redux/contactsSlice';
 
-export const PhonebookList = ({ contacts, onClick }) => {
+export const PhonebookList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.data);
+  const filter = useSelector(state => state.filter);
+
+  const visibleContacts = () => {
+    return [...contacts].filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   if (!contacts.length) {
     return;
   }
+
   return (
     <ul>
-      {contacts.map(({ name, number, id }) => (
+      {visibleContacts().map(({ name, number, id }) => (
         <li key={id}>
           {name}: {number}
-          <button type="button" onClick={() => onClick(id)}>
+          <button
+            type="button"
+            onClick={() => dispatch(removeContacts({ id }))}
+          >
             Delete
           </button>
         </li>
       ))}
     </ul>
   );
-};
-PhonebookList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
