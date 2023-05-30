@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { useGetContactsQuery } from 'redux/contactsSlice';
 import { PhonebookItem } from './PhoneBookItem';
+
 export const PhonebookList = () => {
   const filter = useSelector(state => state.filter);
 

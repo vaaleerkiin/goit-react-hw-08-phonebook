@@ -1,11 +1,11 @@
 import { Forms } from 'components/Phonebook/Phonebook.styled';
-
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import {
   useAddContactsMutation,
   useGetContactsQuery,
 } from 'redux/contactsSlice';
+
 const schema = yup.object().shape({
   name: yup.string().min(6).required(),
   phone: yup.string().min(7).max(9).required(),

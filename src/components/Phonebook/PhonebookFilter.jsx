@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { changeFilter } from 'redux/filterSlice';
+
 export const PhonebookFilter = () => {
   const state = useSelector(state => state.filter);
   const dispatch = useDispatch();
