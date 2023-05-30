@@ -1,34 +1,38 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { removeContacts } from 'redux/contactsSlice';
-
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import BeatLoader from 'react-spinners/BeatLoader';
+import { useGetContactsQuery } from 'redux/contactsSlice';
+import { PhonebookItem } from './PhoneBookItem';
 export const PhonebookList = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.data);
   const filter = useSelector(state => state.filter);
 
+  const { data, error, isLoading } = useGetContactsQuery();
+
   const visibleContacts = () => {
-    return [...contacts].filter(({ name }) =>
+    return [...data].filter(({ name }) =>
       name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
-  if (!contacts.length) {
-    return;
-  }
-
   return (
-    <ul>
-      {visibleContacts().map(({ name, number, id }) => (
-        <li key={id}>
-          {name}: {number}
-          <button
-            type="button"
-            onClick={() => dispatch(removeContacts({ id }))}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {isLoading && (
+        <BeatLoader
+          cssOverride={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        />
+      )}
+      {data && !isLoading && (
+        <ul>
+          {visibleContacts().map(({ name, phone, id }) => (
+            <PhonebookItem key={id} id={id} name={name} phone={phone} />
+          ))}
+        </ul>
+      )}
+      {error && toast.error(error.error) && null}
+    </>
   );
 };
