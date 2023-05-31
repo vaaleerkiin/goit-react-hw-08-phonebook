@@ -1,21 +1,21 @@
-import { useDeleteContactsMutation } from 'redux/contactsSlice';
-
+import { deleteContact } from 'redux/operation';
+import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 export const PhonebookItem = ({ name, phone, id }) => {
-  const [deleteContact, { isLoading: isUpdating }] =
-    useDeleteContactsMutation();
+  const isLoading = useSelector(state => state.contacts.isLoading);
+  const dispatch = useDispatch();
 
   return (
     <li>
       {name}: {phone}
       <button
         type="button"
-        disabled={isUpdating}
+        disabled={isLoading}
         onClick={() => {
-          deleteContact(id);
+          dispatch(deleteContact(id));
         }}
       >
-        {isUpdating && <ClipLoader size={6} />}
+        {isLoading && <ClipLoader size={6} />}
         Delete
       </button>
     </li>

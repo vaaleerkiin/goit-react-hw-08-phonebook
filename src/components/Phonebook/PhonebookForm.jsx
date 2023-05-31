@@ -1,10 +1,8 @@
 import { Forms } from 'components/Phonebook/Phonebook.styled';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import {
-  useAddContactsMutation,
-  useGetContactsQuery,
-} from 'redux/contactsSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from 'redux/operation';
 
 const schema = yup.object().shape({
   name: yup.string().min(6).required(),
@@ -12,8 +10,8 @@ const schema = yup.object().shape({
 });
 
 export const PhonebookForm = () => {
-  const [addContact] = useAddContactsMutation();
-  const { data } = useGetContactsQuery();
+  const distpath = useDispatch();
+  const data = useSelector(state => state.contacts.items);
 
   const handleSubmit = values => {
     if (
@@ -22,7 +20,7 @@ export const PhonebookForm = () => {
       alert(`${values.name} is alreadyin contacts`);
       return;
     } else {
-      addContact(values);
+      distpath(addContact(values));
     }
   };
 
