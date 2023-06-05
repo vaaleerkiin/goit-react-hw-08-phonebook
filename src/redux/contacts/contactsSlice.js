@@ -17,7 +17,6 @@ export const contactsSlice = createApi({
     getContacts: builder.query({
       query: () => '/contacts',
       providesTags: ['Contacts', 'Auth'],
-      refetchOn: 'headerChange',
     }),
     addContacts: builder.mutation({
       query: values => ({
