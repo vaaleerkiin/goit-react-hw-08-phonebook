@@ -5,8 +5,9 @@ import {
   PhonebookWrap,
   FormsWrap,
 } from 'components/Phonebook/Phonebook.styled';
+import { useGetContactsQuery } from 'redux/contacts/contactsSlice';
 
-export const Phonebook = () => {
+const Phonebook = () => {
   return (
     <PhonebookWrap>
       <h2>Phonebook</h2>
@@ -17,3 +18,5 @@ export const Phonebook = () => {
     </PhonebookWrap>
   );
 };
+
+export default Phonebook;

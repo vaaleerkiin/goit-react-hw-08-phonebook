@@ -8,12 +8,7 @@ export const RegisterForm = () => {
     useRegisterMutation();
 
   const onFinish = values => {
-    console.log('Success:', values);
     postRegister(values);
-  };
-
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
   };
 
   useEffect(() => {
@@ -38,7 +33,6 @@ export const RegisterForm = () => {
         style={{ width: '100%' }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="Username"

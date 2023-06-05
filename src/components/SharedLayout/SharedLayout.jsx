@@ -8,15 +8,18 @@ import {
   ButtonLink,
   Username,
 } from './SharedLayout.styled';
+import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
 import { Button } from 'antd';
 import { useLogoutMutation } from 'redux/Auth/operations';
+import MoonLoader from 'react-spinners/MoonLoader';
+
 export const SharedLayout = () => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const username = useSelector(state => state.auth.user.name);
+  const email = useSelector(state => state.auth.user.email);
   const [Logout, { isUninitialized, isSuccess, isError }] = useLogoutMutation();
 
   useEffect(() => {
@@ -40,7 +43,7 @@ export const SharedLayout = () => {
         <Auth>
           {isLoggedIn ? (
             <>
-              <Username>{username}</Username>
+              <Username>{email}</Username>
               <Button type="primary" size="large" onClick={Logout}>
                 LogOut
               </Button>
@@ -54,7 +57,9 @@ export const SharedLayout = () => {
         </Auth>
       </StyledHeader>
       <StyledContent>
-        <Outlet />
+        <Suspense fallback={<MoonLoader size={50} color=" #1677ff" />}>
+          <Outlet />
+        </Suspense>
       </StyledContent>
       <StyledFooter>Footer</StyledFooter>
     </>

@@ -1,10 +1,11 @@
 import { Containers } from 'components/Containers/Container';
 import { LoginForm } from 'components/Login/LoginForm';
 
-export const Login = () => {
+const Login = () => {
   return (
     <Containers>
       <LoginForm />
     </Containers>
   );
 };
+export default Login;

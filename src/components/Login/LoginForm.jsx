@@ -4,23 +4,18 @@ import { Button, Form, Input } from 'antd';
 import { useLoginMutation } from 'redux/Auth/operations';
 
 export const LoginForm = () => {
-  const [postLogin, { error, isUninitialized, isSuccess, isError }] =
+  const [postLogin, { isUninitialized, isSuccess, isError }] =
     useLoginMutation();
 
   const onFinish = values => {
-    console.log('Success:', values);
     postLogin(values);
-  };
-
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
   };
 
   useEffect(() => {
     if (!isUninitialized && isError) {
       toast.error('Fail');
     }
-  }, [error, isError, isUninitialized]);
+  }, [isError, isUninitialized]);
 
   useEffect(() => {
     if (!isUninitialized && isSuccess) {
@@ -38,8 +33,6 @@ export const LoginForm = () => {
         style={{ width: '100%' }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
       >
         <Form.Item
           label="Email"

@@ -2,21 +2,44 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
 import { ButtonWrap } from './Phonebook.styled';
+import {
+  useAddContactsMutation,
+  useGetContactsQuery,
+} from 'redux/contacts/contactsSlice';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+
 export const PhonebookForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [postContatct, { isSuccess, isError }] = useAddContactsMutation();
+  const { data } = useGetContactsQuery();
   const toogleModal = () => {
     setIsModalOpen(prevState => !prevState);
   };
 
   const onFinish = values => {
-    console.log('Success:', values);
     toogleModal();
+    if (
+      data.some(el => values.name.toLowerCase().includes(el.name.toLowerCase()))
+    ) {
+      toast.error(`${values.name} is alreadyin contacts`);
+      return;
+    } else {
+      postContatct(values);
+    }
   };
 
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
+  useEffect(() => {
+    if (isError) {
+      toast.error('Fail');
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Success');
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -44,12 +67,10 @@ export const PhonebookForm = () => {
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
         >
           <Form.Item
             label="Name"
-            name="Name"
+            name="name"
             rules={[{ required: true, message: 'Please input your Name!' }]}
           >
             <Input />
@@ -57,7 +78,7 @@ export const PhonebookForm = () => {
 
           <Form.Item
             label="Number"
-            name="Number"
+            name="number"
             rules={[{ required: true, message: 'Please input your Number!' }]}
           >
             <Input />

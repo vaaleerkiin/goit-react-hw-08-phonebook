@@ -1,23 +1,37 @@
-import { deleteContact } from 'redux/contacts/operations';
-import { useSelector, useDispatch } from 'react-redux';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Button } from 'antd';
+import { useDeleteContactsMutation } from 'redux/contacts/contactsSlice';
 export const PhonebookItem = ({ name, phone, id }) => {
-  const isLoading = useSelector(state => state.contacts.isLoading);
-  const dispatch = useDispatch();
+  const [deleteContatctById, { isLoading, isSuccess, isError }] =
+    useDeleteContactsMutation();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Fail');
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Success');
+    }
+  }, [isSuccess]);
 
   return (
     <li>
       {name}: {phone}
-      <button
-        type="button"
+      <Button
+        loading={isLoading}
         disabled={isLoading}
+        type="primary"
+        size="large"
         onClick={() => {
-          dispatch(deleteContact(id));
+          deleteContatctById(id);
         }}
       >
-        {isLoading && <ClipLoader size={6} />}
         Delete
-      </button>
+      </Button>
     </li>
   );
 };

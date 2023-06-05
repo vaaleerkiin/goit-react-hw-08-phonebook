@@ -11,12 +11,14 @@ export const api = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Auth'],
   endpoints: builder => ({
     login: builder.mutation({
       query: credentials => ({
         url: '/users/login',
         method: 'POST',
         body: credentials,
+        invalidatesTags: ['Auth'],
       }),
     }),
     register: builder.mutation({
@@ -24,17 +26,20 @@ export const api = createApi({
         url: '/users/signup',
         method: 'POST',
         body: credentials,
+        invalidatesTags: ['Auth'],
       }),
     }),
     getUser: builder.query({
       query: () => ({
         url: '/users/current',
+        invalidatesTags: ['Auth'],
       }),
     }),
     logout: builder.mutation({
       query: () => ({
         url: '/users/logout',
         method: 'POST',
+        invalidatesTags: ['Auth'],
       }),
     }),
   }),

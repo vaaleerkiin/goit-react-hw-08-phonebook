@@ -1,12 +1,15 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { SharedLayout } from 'components/SharedLayout/SharedLayout';
 import { useGetUserQuery } from 'redux/Auth/operations';
-import { Phonebook } from 'pages/Phonebook';
-import { Register } from 'pages/Register';
-import { Login } from 'pages/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MoonLoader from 'react-spinners/MoonLoader';
+import { PrivateRoute } from 'components/PrivateRoute';
+import { RestrictedRoute } from 'components/RestrictedRoute';
+import { lazy } from 'react';
+const Phonebook = lazy(() => import('pages/Phonebook'));
+const Login = lazy(() => import('pages/Login'));
+const Register = lazy(() => import('pages/Register'));
 
 export const App = () => {
   const { isLoading } = useGetUserQuery();
@@ -30,9 +33,27 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<Navigate to="contacts" />} />
-            <Route path="contacts" element={<Phonebook />}></Route>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="register" element={<Register />}></Route>
+            <Route
+              path="contacts"
+              element={
+                <PrivateRoute component={<Phonebook />} redirectTo="/login" />
+              }
+            ></Route>
+            <Route
+              path="login"
+              element={
+                <RestrictedRoute component={<Login />} redirectTo="/contacts" />
+              }
+            ></Route>
+            <Route
+              path="register"
+              element={
+                <RestrictedRoute
+                  component={<Register />}
+                  redirectTo="/contacts"
+                />
+              }
+            ></Route>
           </Route>
         </Routes>
       )}
