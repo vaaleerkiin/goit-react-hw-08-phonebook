@@ -19,20 +19,23 @@ export const PhonebookItem = ({ name, number, id }) => {
   }, [isSuccess]);
 
   return (
-    <li style={{ width: '100%' }}>
-      {name}: {number}
-      <Button
-        style={{ marginLeft: 'auto ' }}
-        loading={isLoading}
-        disabled={isLoading}
-        type="primary"
-        size="large"
-        onClick={() => {
-          deleteContatctById(id);
-        }}
-      >
-        Delete
-      </Button>
+    <li>
+      <hr />
+      <div>
+        {name}: {number}
+        <Button
+          style={{ marginLeft: 'auto ' }}
+          loading={isLoading}
+          disabled={isLoading}
+          type="primary"
+          size="large"
+          onClick={() => {
+            deleteContatctById(id);
+          }}
+        >
+          Delete
+        </Button>
+      </div>
     </li>
   );
 };

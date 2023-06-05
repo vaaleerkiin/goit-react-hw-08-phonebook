@@ -28,6 +28,7 @@ export const PhonebookWrap = styled.div`
     margin-right: auto;
   }
   ul {
+    list-style: none;
     padding: 0;
     padding-left: 32px;
     margin: 0;
@@ -38,12 +39,20 @@ export const PhonebookWrap = styled.div`
     gap: 16px;
 
     li {
-      font-size: 32px;
-      display: flex;
-      justify-content: center;
-      flex-direction: row;
-      gap: 16px;
-      align-items: center;
+      width: 100%;
+      hr {
+        margin: 0;
+      }
+      div {
+        width: 100%;
+        padding-top: 16px;
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        gap: 16px;
+        align-items: center;
+      }
     }
   }
   p {
