@@ -7,12 +7,15 @@ import { useEffect } from 'react';
 
 export const PhonebookList = () => {
   const filter = useSelector(state => state.filter);
-  const { data, isLoading, error, refetch } = useGetContactsQuery({});
+  const { data, isLoading, error, refetch, isUninitialized } =
+    useGetContactsQuery({});
   const token = useSelector(state => state.auth.token);
 
   useEffect(() => {
-    refetch();
-  }, [refetch, token]);
+    if (!isUninitialized) {
+      refetch();
+    }
+  }, [isUninitialized, refetch, token]);
 
   const visibleContacts = () => {
     return [...data].filter(({ name }) =>
