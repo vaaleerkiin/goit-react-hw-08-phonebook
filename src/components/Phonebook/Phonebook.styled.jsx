@@ -117,7 +117,13 @@ export const FormsWrap = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-
+  flex-wrap: nowrap;
+  gap: 16px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
   input::placeholder {
     color: black;
   }

@@ -11,6 +11,7 @@ export const StyledHeader = styled(Header)`
   z-index: 10;
   width: 100%;
   height: 64px;
+  gap: 16px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -23,7 +24,7 @@ export const StyledContent = styled(Content)`
   align-items: flex-start;
   padding: 16px;
   padding-top: 80px;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 128px);
 `;
 
 export const StyledFooter = styled(Footer)`
@@ -80,4 +81,7 @@ export const Username = styled.p`
   font-size: 20px;
   font-weight: 500;
   color: white;
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
