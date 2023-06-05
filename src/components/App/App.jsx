@@ -7,7 +7,6 @@ import MoonLoader from 'react-spinners/MoonLoader';
 import { PrivateRoute } from 'components/PrivateRoute';
 import { RestrictedRoute } from 'components/RestrictedRoute';
 import { lazy } from 'react';
-import { useGetContactsQuery } from 'redux/contacts/contactsSlice';
 const Phonebook = lazy(() => import('pages/Phonebook'));
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
