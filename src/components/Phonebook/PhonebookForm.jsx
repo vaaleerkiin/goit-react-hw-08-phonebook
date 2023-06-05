@@ -54,7 +54,7 @@ export const PhonebookForm = () => {
         />
       </ButtonWrap>
       <Modal
-        title="Add contact"
+        title={<h3 style={{ textAlign: 'center' }}>Add contact</h3>}
         open={isModalOpen}
         onOk={toogleModal}
         onCancel={toogleModal}
@@ -62,8 +62,7 @@ export const PhonebookForm = () => {
       >
         <Form
           name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
+          labelCol={{ span: 4 }}
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
@@ -84,7 +83,7 @@ export const PhonebookForm = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
