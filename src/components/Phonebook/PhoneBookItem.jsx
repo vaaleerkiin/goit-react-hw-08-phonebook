@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
 import { useDeleteContactsMutation } from 'redux/contacts/contactsSlice';
-export const PhonebookItem = ({ name, phone, id }) => {
+export const PhonebookItem = ({ name, number, id }) => {
   const [deleteContatctById, { isLoading, isSuccess, isError }] =
     useDeleteContactsMutation();
 
@@ -19,9 +19,10 @@ export const PhonebookItem = ({ name, phone, id }) => {
   }, [isSuccess]);
 
   return (
-    <li>
-      {name}: {phone}
+    <li style={{ width: '100%' }}>
+      {name}: {number}
       <Button
+        style={{ marginLeft: 'auto ' }}
         loading={isLoading}
         disabled={isLoading}
         type="primary"

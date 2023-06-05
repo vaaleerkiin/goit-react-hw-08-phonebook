@@ -28,8 +28,7 @@ export const RegisterForm = () => {
       <h1>Register</h1>
       <Form
         name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
+        labelCol={{ span: 4 }}
         style={{ width: '100%' }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -99,7 +98,7 @@ export const RegisterForm = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
           <Button type="primary" htmlType="submit" size="large">
             Submit
           </Button>

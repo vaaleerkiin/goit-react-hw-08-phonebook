@@ -34,9 +34,9 @@ export const PhonebookList = () => {
         />
       )}
       {data && !isLoading && (
-        <ul>
-          {visibleContacts().map(({ name, phone, id }) => (
-            <PhonebookItem key={id} id={id} name={name} phone={phone} />
+        <ul style={{ width: '100%', padding: 0 }}>
+          {visibleContacts().map(({ name, number, id }) => (
+            <PhonebookItem key={id} id={id} name={name} number={number} />
           ))}
         </ul>
       )}
