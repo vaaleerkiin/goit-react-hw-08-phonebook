@@ -1,18 +1,26 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { changeFilter } from 'redux/filterSlice';
+import { Input, Tooltip } from 'antd';
 
 export const PhonebookFilter = () => {
   const state = useSelector(state => state.filter);
   const dispatch = useDispatch();
   return (
     <div>
-      <p>Find contacts by name</p>
-      <input
-        type="text"
-        name="filter"
-        value={state}
-        onChange={e => dispatch(changeFilter({ value: e.target.value }))}
-      />
+      <Tooltip
+        trigger={['focus']}
+        title="Find contacts by name"
+        placement="topLeft"
+      >
+        <Input
+          type="text"
+          name="filter"
+          placeholder="Find contacts by name"
+          value={state}
+          style={{ maxWidth: 300 }}
+          onChange={e => dispatch(changeFilter({ value: e.target.value }))}
+        />
+      </Tooltip>
     </div>
   );
 };

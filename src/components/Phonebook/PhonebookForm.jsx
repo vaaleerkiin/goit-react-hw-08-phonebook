@@ -1,57 +1,75 @@
-import { Forms } from 'components/Phonebook/Phonebook.styled';
-import { Formik, Field, ErrorMessage } from 'formik';
-import * as yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'redux/operation';
-
-const schema = yup.object().shape({
-  name: yup.string().min(6).required(),
-  phone: yup.string().min(7).max(9).required(),
-});
-
+import React, { useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Modal } from 'antd';
+import { ButtonWrap } from './Phonebook.styled';
 export const PhonebookForm = () => {
-  const distpath = useDispatch();
-  const data = useSelector(state => state.contacts.items);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSubmit = values => {
-    if (
-      data.some(el => el.name.toLowerCase().includes(values.name.toLowerCase()))
-    ) {
-      alert(`${values.name} is alreadyin contacts`);
-      return;
-    } else {
-      distpath(addContact(values));
-    }
+  const toogleModal = () => {
+    setIsModalOpen(prevState => !prevState);
+  };
+
+  const onFinish = values => {
+    console.log('Success:', values);
+    toogleModal();
+  };
+
+  const onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
   };
 
   return (
-    <Formik
-      initialValues={{ name: '', phone: '' }}
-      onSubmit={(values, { resetForm }) => {
-        handleSubmit(values);
-        resetForm();
-      }}
-      validationSchema={schema}
-    >
-      <Forms>
-        <label>
-          Name
-          <Field type="text" name="name" />
-          <ErrorMessage
-            name="name"
-            render={msg => <span style={{ color: 'red' }}>{msg}</span>}
-          />
-        </label>
-        <label>
-          Number
-          <Field type="number" name="phone" />
-          <ErrorMessage
-            name="phone"
-            render={msg => <span style={{ color: 'red' }}>{msg}</span>}
-          />
-        </label>
-        <button type="submit">Add contact</button>
-      </Forms>
-    </Formik>
+    <>
+      <ButtonWrap>
+        <span>Add contact</span>
+        <Button
+          type="primary"
+          style={{ backgroundColor: '#4BB543' }}
+          icon={<PlusOutlined />}
+          size="large"
+          onClick={toogleModal}
+        />
+      </ButtonWrap>
+      <Modal
+        title="Add contact"
+        open={isModalOpen}
+        onOk={toogleModal}
+        onCancel={toogleModal}
+        footer={null}
+      >
+        <Form
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Name"
+            name="Name"
+            rules={[{ required: true, message: 'Please input your Name!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Number"
+            name="Number"
+            rules={[{ required: true, message: 'Please input your Number!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };

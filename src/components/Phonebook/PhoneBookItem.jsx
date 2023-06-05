@@ -1,4 +1,4 @@
-import { deleteContact } from 'redux/operation';
+import { deleteContact } from 'redux/contacts/operations';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 export const PhonebookItem = ({ name, phone, id }) => {

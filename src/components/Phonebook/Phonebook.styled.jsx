@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 import { Form } from 'formik';
 
 export const PhonebookWrap = styled.div`
-  border: dashed ${props => props.theme.colors.black} 1px;
+  border: solid ${props => props.theme.colors.black} 1px;
   width: 700px;
-
+  margin-left: auto;
+  margin-right: auto;
   background-color: ${props => props.theme.colors.white};
   display: flex;
   justify-content: center;
@@ -20,19 +21,11 @@ export const PhonebookWrap = styled.div`
     flex-direction: column;
     align-items: flex-start;
   }
-  button {
-    border: solid ${props => props.theme.colors.black} 1px;
-    background-color: ${props => props.theme.colors.white};
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 8px;
 
-    :active {
-      background-color: ${props => props.theme.colors.bgColor};
-    }
-  }
   h2 {
     font-size: 32px;
+    margin-left: auto;
+    margin-right: auto;
   }
   ul {
     padding: 0;
@@ -57,7 +50,9 @@ export const PhonebookWrap = styled.div`
     padding: 0;
 
     margin: 0;
-    font-size: 24px;
+
+    font-size: 20px;
+    font-weight: 500;
   }
 `;
 
@@ -95,5 +90,26 @@ export const Forms = styled(Form)`
     font-size: 24px;
     width: 400px;
     height: 32px;
+  }
+`;
+
+export const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  span {
+    font-size: 20px;
+    font-weight: 500;
+  }
+`;
+export const FormsWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  input::placeholder {
+    color: black;
   }
 `;

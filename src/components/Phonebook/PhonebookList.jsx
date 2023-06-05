@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import BeatLoader from 'react-spinners/BeatLoader';
 import { PhonebookItem } from './PhoneBookItem';
 

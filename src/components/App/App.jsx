@@ -1,26 +1,43 @@
-import { Containers } from 'components/Containers/Container';
-import { Wrap } from 'components/App/App.styled';
-import { Phonebook } from 'components/Phonebook/Phonebook';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { SharedLayout } from 'components/SharedLayout/SharedLayout';
+import { useGetUserQuery } from 'redux/Auth/operations';
+import { Phonebook } from 'pages/Phonebook';
+import { Register } from 'pages/Register';
+import { Login } from 'pages/Login';
 import { ToastContainer } from 'react-toastify';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchContacts } from 'redux/operation';
+import 'react-toastify/dist/ReactToastify.css';
+import MoonLoader from 'react-spinners/MoonLoader';
 
 export const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  const { isLoading } = useGetUserQuery();
 
   return (
     <>
-      <Wrap>
-        <Containers>
-          <Phonebook />
-        </Containers>
-      </Wrap>
-      <ToastContainer />
+      {isLoading ? (
+        <div
+          style={{
+            backgroundColor: '#001529',
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <MoonLoader size={50} color=" #1677ff" />
+        </div>
+      ) : (
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route index element={<Navigate to="contacts" />} />
+            <Route path="contacts" element={<Phonebook />}></Route>
+            <Route path="login" element={<Login />}></Route>
+            <Route path="register" element={<Register />}></Route>
+          </Route>
+        </Routes>
+      )}
+
+      <ToastContainer position="top-center" />
     </>
   );
 };
