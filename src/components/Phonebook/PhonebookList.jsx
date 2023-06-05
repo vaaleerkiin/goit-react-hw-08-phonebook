@@ -1,21 +1,11 @@
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useGetContactsQuery } from 'redux/contacts/contactsSlice';
+
 import BeatLoader from 'react-spinners/BeatLoader';
 import { PhonebookItem } from './PhoneBookItem';
-import { useEffect } from 'react';
 
-export const PhonebookList = () => {
+export const PhonebookList = ({ data, isLoading, error }) => {
   const filter = useSelector(state => state.filter);
-  const { data, isLoading, error, refetch, isUninitialized } =
-    useGetContactsQuery({});
-  const token = useSelector(state => state.auth.token);
-
-  useEffect(() => {
-    if (!isUninitialized) {
-      refetch();
-    }
-  }, [isUninitialized, refetch, token]);
 
   const visibleContacts = () => {
     return [...data].filter(({ name }) =>

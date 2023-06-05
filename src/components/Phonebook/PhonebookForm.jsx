@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
 import { ButtonWrap } from './Phonebook.styled';
-import {
-  useAddContactsMutation,
-  useGetContactsQuery,
-} from 'redux/contacts/contactsSlice';
+import { useAddContactsMutation } from 'redux/contacts/contactsSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-export const PhonebookForm = () => {
+export const PhonebookForm = ({ data }) => {
+  const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postContatct, { isSuccess, isError }] = useAddContactsMutation();
-  const { data } = useGetContactsQuery();
+
   const toogleModal = () => {
     setIsModalOpen(prevState => !prevState);
   };
 
   const onFinish = values => {
     toogleModal();
+    form.resetFields();
     if (
       data.some(el => values.name.toLowerCase().includes(el.name.toLowerCase()))
     ) {
@@ -61,10 +60,11 @@ export const PhonebookForm = () => {
         footer={null}
       >
         <Form
+          form={form}
           name="basic"
           labelCol={{ span: 4 }}
           style={{ maxWidth: 600 }}
-          initialValues={{ remember: true }}
+          initialValues={{ name: '', number: '' }}
           onFinish={onFinish}
         >
           <Form.Item

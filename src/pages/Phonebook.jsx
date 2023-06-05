@@ -5,15 +5,18 @@ import {
   PhonebookWrap,
   FormsWrap,
 } from 'components/Phonebook/Phonebook.styled';
+import { useGetContactsQuery } from 'redux/contacts/contactsSlice';
 
 const Phonebook = () => {
+  const { data, isLoading, error } = useGetContactsQuery();
+
   return (
     <PhonebookWrap>
       <h2>Phonebook</h2>
       <FormsWrap>
-        <PhonebookFilter /> <PhonebookForm />
+        <PhonebookFilter /> <PhonebookForm data={data} />
       </FormsWrap>
-      <PhonebookList />
+      <PhonebookList data={data} isLoading={isLoading} error={error} />
     </PhonebookWrap>
   );
 };
