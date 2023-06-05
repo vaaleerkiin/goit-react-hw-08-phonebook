@@ -5,7 +5,6 @@ import {
   PhonebookWrap,
   FormsWrap,
 } from 'components/Phonebook/Phonebook.styled';
-import { useGetContactsQuery } from 'redux/contacts/contactsSlice';
 
 const Phonebook = () => {
   return (
