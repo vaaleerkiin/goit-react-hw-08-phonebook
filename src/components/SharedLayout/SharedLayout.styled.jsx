@@ -18,7 +18,9 @@ export const StyledHeader = styled(Header)`
 
 export const StyledContent = styled(Content)`
   background-color: #e3e3e3;
-
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
   padding: 16px;
   padding-top: 80px;
   min-height: calc(100vh - 64px);
