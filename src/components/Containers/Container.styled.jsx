@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Container = styled.section`
   border: solid ${props => props.theme.colors.black} 1px;
-  width: 700px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   background-color: ${props => props.theme.colors.white};
