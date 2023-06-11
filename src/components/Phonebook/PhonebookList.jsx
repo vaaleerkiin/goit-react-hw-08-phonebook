@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-
 import BeatLoader from 'react-spinners/BeatLoader';
 import { PhonebookItem } from './PhonebookItem';
 
