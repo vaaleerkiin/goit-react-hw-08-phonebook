@@ -15,7 +15,7 @@ export const PhonebookModal = ({
   const [editContatctById, { isError, isSuccess }] = useEditContactsMutation();
   const onFinish = values => {
     toogleModal();
-    form.resetFields();
+
     if (
       data.some(
         el =>
@@ -57,6 +57,7 @@ export const PhonebookModal = ({
         style={{ maxWidth: 600 }}
         initialValues={{ name: `${name}`, number: `${number}` }}
         onFinish={onFinish}
+        onFinishFailed={form.resetFields}
       >
         <Form.Item
           label="Name"
