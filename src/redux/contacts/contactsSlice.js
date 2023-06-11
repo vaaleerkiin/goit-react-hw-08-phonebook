@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { number } from 'prop-types';
 
 export const contactsSlice = createApi({
   reducerPath: 'contacts',
@@ -16,7 +17,7 @@ export const contactsSlice = createApi({
   endpoints: builder => ({
     getContacts: builder.query({
       query: () => '/contacts',
-      providesTags: ['Contacts', 'Auth'],
+      providesTags: ['Contacts'],
     }),
     addContacts: builder.mutation({
       query: values => ({
@@ -24,7 +25,7 @@ export const contactsSlice = createApi({
         method: 'POST',
         body: values,
       }),
-      invalidatesTags: ['Contacts', 'Auth'],
+      invalidatesTags: ['Contacts'],
       transformResponse: (response, meta, arg) => response.data,
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
@@ -33,7 +34,15 @@ export const contactsSlice = createApi({
         url: `/contacts/${Id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Contacts', 'Auth'],
+      invalidatesTags: ['Contacts'],
+    }),
+    editContacts: builder.mutation({
+      query: ({ id, values }) => ({
+        url: `/contacts/${id}`,
+        method: 'PATCH',
+        body: values,
+      }),
+      invalidatesTags: ['Contacts'],
     }),
   }),
 });
@@ -42,5 +51,6 @@ export const {
   useGetContactsQuery,
   useAddContactsMutation,
   useDeleteContactsMutation,
+  useEditContactsMutation,
 } = contactsSlice;
 export const contactsReducer = contactsSlice.reducer;

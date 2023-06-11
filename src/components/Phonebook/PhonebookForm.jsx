@@ -61,7 +61,7 @@ export const PhonebookForm = ({ data }) => {
       >
         <Form
           form={form}
-          name="basic"
+          name="create"
           labelCol={{ span: 4 }}
           style={{ maxWidth: 600 }}
           initialValues={{ name: '', number: '' }}
@@ -70,7 +70,25 @@ export const PhonebookForm = ({ data }) => {
           <Form.Item
             label="Name"
             name="name"
-            rules={[{ required: true, message: 'Please input your Name!' }]}
+            rules={[
+              { required: true, message: '' },
+              {
+                validator: async (_, names) => {
+                  if (!names) {
+                    return Promise.reject(new Error('Please input your Name!'));
+                  } else if (
+                    names.trim().length < 6 ||
+                    names.trim().length > 10
+                  ) {
+                    return Promise.reject(
+                      new Error(
+                        'Please input your Name! (Min is 6 & Max is 10)'
+                      )
+                    );
+                  }
+                },
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -78,7 +96,27 @@ export const PhonebookForm = ({ data }) => {
           <Form.Item
             label="Number"
             name="number"
-            rules={[{ required: true, message: 'Please input your Number!' }]}
+            rules={[
+              { required: true, message: '' },
+              {
+                validator: async (_, number) => {
+                  if (!number) {
+                    return Promise.reject(
+                      new Error('Please input your Number!')
+                    );
+                  } else if (
+                    number.trim().length < 6 ||
+                    number.trim().length > 10
+                  ) {
+                    return Promise.reject(
+                      new Error(
+                        'Please input your Number! (Min is 6 & Max is 10)'
+                      )
+                    );
+                  }
+                },
+              },
+            ]}
           >
             <Input />
           </Form.Item>
