@@ -17,7 +17,11 @@ export const PhonebookModal = ({
     toogleModal();
     form.resetFields();
     if (
-      data.some(el => values.name.toLowerCase().includes(el.name.toLowerCase()))
+      data.some(
+        el =>
+          values.name.toLowerCase().includes(el.name.toLowerCase()) &&
+          values.number.toLowerCase().includes(el.number.toLowerCase())
+      )
     ) {
       toast.error(`${values.name} is alreadyin contacts`);
       return;
