@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { number } from 'prop-types';
 
 export const contactsSlice = createApi({
   reducerPath: 'contacts',
