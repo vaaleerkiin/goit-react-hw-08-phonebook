@@ -23,6 +23,7 @@ export const DocsModal = () => {
             Docs
           </Button>
           <Modal
+            centered
             width={1440}
             title="Docs"
             open={isModalOpen}
