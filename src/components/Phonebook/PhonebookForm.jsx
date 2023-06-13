@@ -21,7 +21,7 @@ export const PhonebookForm = ({ data }) => {
     if (
       data.some(el => values.name.toLowerCase().includes(el.name.toLowerCase()))
     ) {
-      toast.error(`${values.name} is alreadyin contacts`);
+      toast.error(`${values.name} is already in contacts`);
       return;
     } else {
       postContatct(values);

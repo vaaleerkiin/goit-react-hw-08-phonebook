@@ -23,7 +23,7 @@ export const PhonebookModal = ({
           values.number.toLowerCase().includes(el.number.toLowerCase())
       )
     ) {
-      toast.error(`${values.name} is alreadyin contacts`);
+      toast.error(`${values.name} is already in contacts`);
       return;
     } else {
       editContatctById({ id, values });
