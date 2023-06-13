@@ -24,11 +24,15 @@ export const StyledContent = styled(Content)`
   align-items: flex-start;
   padding: 16px;
   padding-top: 80px;
-  min-height: calc(100vh - 128px);
+  min-height: calc(100vh - 152px);
 `;
 
 export const StyledFooter = styled(Footer)`
+  height: 88px;
   background-color: #001529;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 export const Link = styled(NavLink)`

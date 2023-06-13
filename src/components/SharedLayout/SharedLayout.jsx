@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button } from 'antd';
 import { useLogoutMutation } from 'redux/Auth/operations';
+import { DocsModal } from 'components/DocsModal/DocsModal';
 import MoonLoader from 'react-spinners/MoonLoader';
 
 export const SharedLayout = () => {
@@ -61,7 +62,9 @@ export const SharedLayout = () => {
           <Outlet />
         </Suspense>
       </StyledContent>
-      <StyledFooter>Footer</StyledFooter>
+      <StyledFooter>
+        <DocsModal />
+      </StyledFooter>
     </>
   );
 };
