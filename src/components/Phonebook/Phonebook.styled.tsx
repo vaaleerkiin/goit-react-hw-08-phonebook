@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Form } from "formik";
 
 export const PhonebookWrap = styled.div`
   border: solid #000000 1px;
@@ -62,43 +61,6 @@ export const PhonebookWrap = styled.div`
 
     font-size: 20px;
     font-weight: 500;
-  }
-`;
-
-export const Forms = styled(Form)`
-  border: solid #000000 1px;
-
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 16px;
-  overflow: hidden;
-  label {
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-start;
-  }
-  button {
-    border: solid #000000 1px;
-    background-color: #ffffff;
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 8px;
-
-    :active {
-      background-color: "#E7ECF2";
-    }
-  }
-  input {
-    font-size: 24px;
-    width: 400px;
-    height: 32px;
   }
 `;
 
