@@ -55,6 +55,7 @@ export const App: React.FC = () => {
               }
             ></Route>
           </Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       )}
 
