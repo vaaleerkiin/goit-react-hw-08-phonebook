@@ -34,19 +34,19 @@ export const App: React.FC = () => {
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<Navigate to="contacts" />} />
             <Route
-              path="/contacts"
+              path="contacts"
               element={
                 <PrivateRoute component={<Phonebook />} redirectTo="/login" />
               }
             ></Route>
             <Route
-              path="/login"
+              path="login"
               element={
                 <RestrictedRoute component={<Login />} redirectTo="/contacts" />
               }
             ></Route>
             <Route
-              path="/register"
+              path="register"
               element={
                 <RestrictedRoute
                   component={<Register />}
