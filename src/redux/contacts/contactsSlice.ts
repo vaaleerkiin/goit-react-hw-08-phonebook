@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "redux/store";
-import { IData } from "Type/dataType";
+import { DataType } from "Type/dataType";
 
 export const contactsSlice = createApi({
   reducerPath: "contacts",
@@ -27,7 +27,7 @@ export const contactsSlice = createApi({
         body: values,
       }),
       invalidatesTags: ["Contacts"],
-      transformResponse: (response: { data: IData }, meta, arg) =>
+      transformResponse: (response: { data: DataType }, meta, arg) =>
         response.data,
       transformErrorResponse: (response, meta, arg) => response.status,
     }),

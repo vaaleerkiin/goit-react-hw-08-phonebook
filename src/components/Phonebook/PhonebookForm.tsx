@@ -5,10 +5,10 @@ import { ButtonWrap } from "./Phonebook.styled";
 import { useAddContactsMutation } from "redux/contacts/contactsSlice";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { IData } from "Type/dataType";
-import { IFormValue } from "Type/FormType";
+import { DataType } from "Type/dataType";
+import { FormType } from "Type/FormType";
 
-export const PhonebookForm: React.FC<{ data: IData[] }> = ({ data }) => {
+export const PhonebookForm: React.FC<{ data: DataType[] }> = ({ data }) => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postContatct, { isSuccess, isError }] = useAddContactsMutation();
@@ -17,7 +17,7 @@ export const PhonebookForm: React.FC<{ data: IData[] }> = ({ data }) => {
     setIsModalOpen((prevState) => !prevState);
   };
 
-  const onFinish = (values: IFormValue) => {
+  const onFinish = (values: FormType) => {
     toogleModal();
     form.resetFields();
     if (

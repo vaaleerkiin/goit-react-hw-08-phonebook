@@ -3,12 +3,12 @@ import { toast } from "react-toastify";
 import BeatLoader from "react-spinners/BeatLoader";
 import { PhonebookItem } from "./PhonebookItem";
 import { RootState } from "redux/store";
-import { IData } from "Type/dataType";
+import { DataType } from "Type/dataType";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
 export const PhonebookList: React.FC<{
-  data: IData[];
+  data: DataType[];
   isLoading: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;
 }> = ({ data, isLoading, error }) => {

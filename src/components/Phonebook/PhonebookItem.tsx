@@ -3,13 +3,13 @@ import { toast } from "react-toastify";
 import { Button } from "antd";
 import { useDeleteContactsMutation } from "redux/contacts/contactsSlice";
 import { PhonebookModal } from "./PhonebookModal";
-import { IData } from "Type/dataType";
+import { DataType } from "Type/dataType";
 
 export const PhonebookItem: React.FC<{
   name: string;
   number: string;
   id: string;
-  data: IData[];
+  data: DataType[];
 }> = ({ name, number, id, data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteContatctById, { isLoading, isSuccess, isError }] =

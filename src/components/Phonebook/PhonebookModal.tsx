@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { useEditContactsMutation } from "redux/contacts/contactsSlice";
 import { toast } from "react-toastify";
-import { IData } from "Type/dataType";
-import { IFormValue } from "Type/FormType";
+import { DataType } from "Type/dataType";
+import { FormType } from "Type/FormType";
 
 export const PhonebookModal: React.FC<{
   open: boolean;
@@ -11,11 +11,11 @@ export const PhonebookModal: React.FC<{
   name: string;
   number: string;
   id: string;
-  data: IData[];
+  data: DataType[];
 }> = ({ open, toogleModal, id, name, number, data }) => {
   const [form] = Form.useForm();
   const [editContatctById, { isError, isSuccess }] = useEditContactsMutation();
-  const onFinish = (values: IFormValue) => {
+  const onFinish = (values: FormType) => {
     toogleModal();
 
     if (

@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Button, Form, Input } from "antd";
 import { useRegisterMutation } from "redux/Auth/operations";
-import { IFormValue } from "Type/FormType";
+import { FormType } from "Type/FormType";
 
 export const RegisterForm: React.FC = () => {
   const [postRegister, { isUninitialized, isSuccess, isError }] =
     useRegisterMutation();
 
-  const onFinish = (values: IFormValue) => {
+  const onFinish = (values: FormType) => {
     postRegister(values);
   };
 

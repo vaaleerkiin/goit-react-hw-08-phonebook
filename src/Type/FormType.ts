@@ -1,4 +1,4 @@
-export interface IFormValue {
+export type FormType = {
   name: string;
   number: string;
-}
+};
