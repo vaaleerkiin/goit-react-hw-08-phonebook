@@ -19,14 +19,14 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addMatcher(api.endpoints.login.matchPending, (state, action) => {})
+      .addMatcher(api.endpoints.login.matchPending, () => {})
       .addMatcher(api.endpoints.login.matchFulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
       })
-      .addMatcher(api.endpoints.login.matchRejected, (state, action) => {})
-      .addMatcher(api.endpoints.register.matchPending, (state, action) => {})
+      .addMatcher(api.endpoints.login.matchRejected, () => {})
+      .addMatcher(api.endpoints.register.matchPending, () => {})
       .addMatcher(
         api.endpoints.register.matchFulfilled,
         (state, { payload }) => {
@@ -35,8 +35,8 @@ const authSlice = createSlice({
           state.isLoggedIn = true;
         }
       )
-      .addMatcher(api.endpoints.register.matchRejected, (state, action) => {})
-      .addMatcher(api.endpoints.getUser.matchPending, (state, action) => {})
+      .addMatcher(api.endpoints.register.matchRejected, () => {})
+      .addMatcher(api.endpoints.getUser.matchPending, () => {})
       .addMatcher(
         api.endpoints.getUser.matchFulfilled,
         (state, { payload }) => {
@@ -44,14 +44,14 @@ const authSlice = createSlice({
           state.user = payload;
         }
       )
-      .addMatcher(api.endpoints.getUser.matchRejected, (state, action) => {})
-      .addMatcher(api.endpoints.logout.matchPending, (state, action) => {})
-      .addMatcher(api.endpoints.logout.matchFulfilled, (state, { payload }) => {
+      .addMatcher(api.endpoints.getUser.matchRejected, () => {})
+      .addMatcher(api.endpoints.logout.matchPending, () => {})
+      .addMatcher(api.endpoints.logout.matchFulfilled, (state) => {
         state.isLoggedIn = false;
         state.user = initialState.user;
         state.token = null;
       })
-      .addMatcher(api.endpoints.logout.matchRejected, (state, action) => {}),
+      .addMatcher(api.endpoints.logout.matchRejected, () => {}),
 });
 
 export const authReducer = authSlice.reducer;
