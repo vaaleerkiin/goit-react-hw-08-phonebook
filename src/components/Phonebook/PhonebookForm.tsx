@@ -8,7 +8,11 @@ import { toast } from "react-toastify";
 import { DataType } from "Type/dataType";
 import { FormType } from "Type/FormType";
 
-export const PhonebookForm: React.FC<{ data: DataType[] }> = ({ data }) => {
+interface IProps {
+  data: DataType[];
+}
+
+export const PhonebookForm: React.FC<IProps> = ({ data }) => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postContatct, { isSuccess, isError }] = useAddContactsMutation();

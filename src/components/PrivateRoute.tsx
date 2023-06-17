@@ -4,12 +4,14 @@ import { useSelector } from "react-redux";
 import React from "react";
 import { RootState } from "redux/store";
 
-export const PrivateRoute = ({
-  component: Component,
-  redirectTo = "/",
-}: {
+interface IProps {
   component: React.ReactNode;
   redirectTo: string;
+}
+
+export const PrivateRoute: React.FC<IProps> = ({
+  component: Component,
+  redirectTo = "/",
 }): React.ReactElement => {
   const { isLoading } = useGetUserQuery(null);
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);

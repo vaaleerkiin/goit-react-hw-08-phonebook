@@ -5,12 +5,14 @@ import { useDeleteContactsMutation } from "redux/contacts/contactsSlice";
 import { PhonebookModal } from "./PhonebookModal";
 import { DataType } from "Type/dataType";
 
-export const PhonebookItem: React.FC<{
+interface IProps {
   name: string;
   number: string;
   id: string;
   data: DataType[];
-}> = ({ name, number, id, data }) => {
+}
+
+export const PhonebookItem: React.FC<IProps> = ({ name, number, id, data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteContatctById, { isLoading, isSuccess, isError }] =
     useDeleteContactsMutation();

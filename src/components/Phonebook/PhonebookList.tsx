@@ -7,11 +7,13 @@ import { DataType } from "Type/dataType";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
-export const PhonebookList: React.FC<{
+interface IProps {
   data: DataType[];
   isLoading: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;
-}> = ({ data, isLoading, error }) => {
+}
+
+export const PhonebookList: React.FC<IProps> = ({ data, isLoading, error }) => {
   const filter = useSelector((state: RootState) => state.filter);
 
   const visibleContacts = () => {

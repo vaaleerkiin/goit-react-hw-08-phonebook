@@ -5,14 +5,23 @@ import { toast } from "react-toastify";
 import { DataType } from "Type/dataType";
 import { FormType } from "Type/FormType";
 
-export const PhonebookModal: React.FC<{
+interface IProps {
   open: boolean;
   toogleModal: () => void;
   name: string;
   number: string;
   id: string;
   data: DataType[];
-}> = ({ open, toogleModal, id, name, number, data }) => {
+}
+
+export const PhonebookModal: React.FC<IProps> = ({
+  open,
+  toogleModal,
+  id,
+  name,
+  number,
+  data,
+}) => {
   const [form] = Form.useForm();
   const [editContatctById, { isError, isSuccess }] = useEditContactsMutation();
   const onFinish = (values: FormType) => {

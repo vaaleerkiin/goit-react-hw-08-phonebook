@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { api } from "./operations";
 
 type AuthType = {
-  user: { name: string | null; mail: string | null };
+  user: { name: string | null; email: string | null };
   token: string | null;
   isLoggedIn: boolean;
 };
 
 const initialState = {
-  user: { name: null, mail: null },
+  user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
 };

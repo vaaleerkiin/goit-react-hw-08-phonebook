@@ -4,8 +4,8 @@ import { RootState } from "redux/store";
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://connections-api.herokuapp.com",
-    prepareHeaders: (headers, { getState }: { getState: () => RootState }) => {
-      const token = getState().auth.token;
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.token;
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }

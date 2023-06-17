@@ -1,4 +1,4 @@
-import { configureStore, Store } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -23,7 +23,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
-export const store: Store = configureStore({
+export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     [contactsSlice.reducerPath]: contactsSlice.reducer,
