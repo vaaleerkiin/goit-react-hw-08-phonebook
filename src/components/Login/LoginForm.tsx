@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Button, Form, Input } from "antd";
 import { useLoginMutation } from "redux/Auth/operations";
+import { IUser } from "Type&Intarface/IUser";
 
 export const LoginForm: React.FC = () => {
   const [postLogin, { isUninitialized, isSuccess, isError }] =
     useLoginMutation();
 
-  const onFinish = (values: { name: string; email: string }) => {
+  const onFinish = (values: IUser) => {
     postLogin(values);
   };
 

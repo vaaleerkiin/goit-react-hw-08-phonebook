@@ -12,7 +12,7 @@ const Login = lazy(() => import("pages/Login"));
 const Register = lazy(() => import("pages/Register"));
 
 export const App: React.FC = () => {
-  const { isLoading } = useGetUserQuery(null);
+  const { isLoading } = useGetUserQuery();
 
   return (
     <>

@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { contactsSlice } from "./contacts/contactsSlice";
+import { contactsAPI } from "./contacts/operations";
 import { filterReducer } from "./filterSlice";
 import { authReducer } from "./Auth/authSlice";
 import { api } from "./Auth/operations";
@@ -26,7 +26,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    [contactsSlice.reducerPath]: contactsSlice.reducer,
+    [contactsAPI.reducerPath]: contactsAPI.reducer,
     auth: persistedReducer,
     filter: filterReducer,
   },
@@ -37,7 +37,7 @@ export const store = configureStore({
       },
     })
       .concat(api.middleware)
-      .concat(contactsSlice.middleware),
+      .concat(contactsAPI.middleware),
 });
 
 export const persistor = persistStore(store);

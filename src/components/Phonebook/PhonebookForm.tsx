@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";
 import { ButtonWrap } from "./Phonebook.styled";
-import { useAddContactsMutation } from "redux/contacts/contactsSlice";
+import { useAddContactsMutation } from "redux/contacts/operations";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { DataType } from "Type/dataType";
-import { FormType } from "Type/FormType";
+import { useGetContactsQuery } from "redux/contacts/operations";
+import { FormType } from "Type&Intarface/FormType";
 
-interface IProps {
-  data: DataType[];
-}
-
-export const PhonebookForm: React.FC<IProps> = ({ data }) => {
+export const PhonebookForm: React.FC = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postContatct, { isSuccess, isError }] = useAddContactsMutation();
+  const { data } = useGetContactsQuery();
 
   const toogleModal = () => {
     setIsModalOpen((prevState) => !prevState);
@@ -25,6 +22,7 @@ export const PhonebookForm: React.FC<IProps> = ({ data }) => {
     toogleModal();
     form.resetFields();
     if (
+      data &&
       data.some((el) =>
         values.name.toLowerCase().includes(el.name.toLowerCase())
       )

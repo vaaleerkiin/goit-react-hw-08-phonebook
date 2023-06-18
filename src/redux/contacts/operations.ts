@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "redux/store";
-import { DataType } from "Type/dataType";
+import { DataType } from "Type&Intarface/dataType";
+import { FormType } from "Type&Intarface/FormType";
 
-export const contactsSlice = createApi({
+export const contactsAPI = createApi({
   reducerPath: "contacts",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://connections-api.herokuapp.com",
@@ -16,11 +17,11 @@ export const contactsSlice = createApi({
   }),
   tagTypes: ["Contacts"],
   endpoints: (builder) => ({
-    getContacts: builder.query({
+    getContacts: builder.query<DataType[], void>({
       query: () => "/contacts",
       providesTags: ["Contacts"],
     }),
-    addContacts: builder.mutation({
+    addContacts: builder.mutation<DataType, FormType>({
       query: (values) => ({
         url: "/contacts",
         method: "POST",
@@ -31,14 +32,14 @@ export const contactsSlice = createApi({
         response.data,
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
-    deleteContacts: builder.mutation({
+    deleteContacts: builder.mutation<void, string>({
       query: (Id) => ({
         url: `/contacts/${Id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Contacts"],
     }),
-    editContacts: builder.mutation({
+    editContacts: builder.mutation<DataType, { id: string; values: FormType }>({
       query: ({ id, values }) => ({
         url: `/contacts/${id}`,
         method: "PATCH",
@@ -54,5 +55,5 @@ export const {
   useAddContactsMutation,
   useDeleteContactsMutation,
   useEditContactsMutation,
-} = contactsSlice;
-export const contactsReducer = contactsSlice.reducer;
+} = contactsAPI;
+export const contactsReducer = contactsAPI.reducer;

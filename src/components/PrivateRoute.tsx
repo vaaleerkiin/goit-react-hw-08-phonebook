@@ -13,7 +13,7 @@ export const PrivateRoute: React.FC<IProps> = ({
   component: Component,
   redirectTo = "/",
 }): React.ReactElement => {
-  const { isLoading } = useGetUserQuery(null);
+  const { isLoading } = useGetUserQuery();
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const shouldRedirect = !isLoggedIn && !isLoading;
 

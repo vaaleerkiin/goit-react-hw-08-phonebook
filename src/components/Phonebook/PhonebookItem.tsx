@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "antd";
-import { useDeleteContactsMutation } from "redux/contacts/contactsSlice";
+import { useDeleteContactsMutation } from "redux/contacts/operations";
 import { PhonebookModal } from "./PhonebookModal";
-import { DataType } from "Type/dataType";
+import { DataType } from "Type&Intarface/dataType";
 
 interface IProps {
   name: string;

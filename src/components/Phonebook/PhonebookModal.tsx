@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Button, Form, Input, Modal } from "antd";
-import { useEditContactsMutation } from "redux/contacts/contactsSlice";
+import { useEditContactsMutation } from "redux/contacts/operations";
 import { toast } from "react-toastify";
-import { DataType } from "Type/dataType";
-import { FormType } from "Type/FormType";
+import { FormType } from "Type&Intarface/FormType";
+import { DataType } from "Type&Intarface/dataType";
 
 interface IProps {
   open: boolean;

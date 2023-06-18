@@ -3,23 +3,18 @@ import { toast } from "react-toastify";
 import BeatLoader from "react-spinners/BeatLoader";
 import { PhonebookItem } from "./PhonebookItem";
 import { RootState } from "redux/store";
-import { DataType } from "Type/dataType";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
+import { useGetContactsQuery } from "redux/contacts/operations";
+import { DataType } from "Type&Intarface/dataType";
 
-interface IProps {
-  data: DataType[];
-  isLoading: boolean;
-  error: FetchBaseQueryError | SerializedError | undefined;
-}
-
-export const PhonebookList: React.FC<IProps> = ({ data, isLoading, error }) => {
+export const PhonebookList: React.FC = () => {
   const filter = useSelector((state: RootState) => state.filter);
-
-  const visibleContacts = () => {
-    return [...data].filter(({ name }) =>
-      name.toLowerCase().includes(filter.toLowerCase())
-    );
+  const { data, isLoading, error } = useGetContactsQuery();
+  const visibleContacts = (): DataType[] | [] => {
+    return data
+      ? data.filter(({ name }) =>
+          name.toLowerCase().includes(filter.toLowerCase())
+        )
+      : [];
   };
 
   const errorHandle = () => {

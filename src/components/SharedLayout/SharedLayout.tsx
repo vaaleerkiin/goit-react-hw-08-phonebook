@@ -46,7 +46,7 @@ export const SharedLayout = () => {
           {isLoggedIn ? (
             <>
               <Username>{email}</Username>
-              <Button type="primary" size="large" onClick={Logout}>
+              <Button type="primary" size="large" onClick={() => Logout()}>
                 LogOut
               </Button>
             </>

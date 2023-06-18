@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "redux/store";
+import { IUser } from "Type&Intarface/IUser";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -14,7 +15,13 @@ export const api = createApi({
   }),
   tagTypes: ["Auth"],
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<
+      {
+        token: string;
+        user: Pick<IUser, "email" | "name">;
+      },
+      Pick<IUser, "email" | "password">
+    >({
       query: (credentials) => ({
         url: "/users/login",
         method: "POST",
@@ -22,7 +29,13 @@ export const api = createApi({
         invalidatesTags: ["Auth"],
       }),
     }),
-    register: builder.mutation({
+    register: builder.mutation<
+      {
+        token: string;
+        user: Pick<IUser, "email" | "name">;
+      },
+      Pick<IUser, "email" | "name" | "password">
+    >({
       query: (credentials) => ({
         url: "/users/signup",
         method: "POST",
@@ -30,13 +43,13 @@ export const api = createApi({
         invalidatesTags: ["Auth"],
       }),
     }),
-    getUser: builder.query({
+    getUser: builder.query<IUser, void>({
       query: () => ({
         url: "/users/current",
-        invalidatesTags: ["Auth"],
+        providesTags: ["Auth"],
       }),
     }),
-    logout: builder.mutation({
+    logout: builder.mutation<void, void>({
       query: () => ({
         url: "/users/logout",
         method: "POST",
