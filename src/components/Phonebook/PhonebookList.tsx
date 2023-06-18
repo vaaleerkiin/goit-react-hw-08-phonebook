@@ -35,20 +35,25 @@ export const PhonebookList: React.FC = () => {
           }}
         />
       )}
-      {data && !isLoading && (
-        <ul style={{ width: "100%", padding: 0 }}>
-          {visibleContacts().map(({ name, number, id }) => (
-            <PhonebookItem
-              key={id}
-              id={id}
-              name={name}
-              number={number}
-              data={data}
-            />
+      <ul style={{ width: "100%", padding: 0 }}>
+        {!isLoading &&
+          (data?.length ? (
+            visibleContacts().map(({ name, number, id }) => (
+              <PhonebookItem
+                key={id}
+                id={id}
+                name={name}
+                number={number}
+                data={data}
+              />
+            ))
+          ) : (
+            <li>
+              <hr />
+              <h3 style={{ textAlign: "center" }}>Nothing here</h3>
+            </li>
           ))}
-        </ul>
-      )}
-
+      </ul>
       {errorHandle()}
     </>
   );

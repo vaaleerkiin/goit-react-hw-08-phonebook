@@ -38,7 +38,7 @@ export const contactsAPI = createApi({
       }),
       invalidatesTags: ["Contacts"],
     }),
-    editContacts: builder.mutation<DataType, { id: string; values: FormType }>({
+    editContacts: builder.mutation<void, { id: string; values: FormType }>({
       query: ({ id, values }) => ({
         url: `/contacts/${id}`,
         method: "PATCH",
