@@ -28,9 +28,8 @@ export const contactsAPI = createApi({
         body: values,
       }),
       invalidatesTags: ["Contacts"],
-      transformResponse: (response: { data: DataType }, meta, arg) =>
-        response.data,
-      transformErrorResponse: (response, meta, arg) => response.status,
+      transformResponse: (response: { data: DataType }) => response.data,
+      transformErrorResponse: (response) => response.status,
     }),
     deleteContacts: builder.mutation<void, string>({
       query: (Id) => ({
