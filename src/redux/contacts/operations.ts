@@ -4,7 +4,7 @@ import { DataType } from "Type&Intarface/dataType";
 import { FormType } from "Type&Intarface/FormType";
 
 export const contactsAPI = createApi({
-  reducerPath: "contacts",
+  reducerPath: "contactsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://connections-api.herokuapp.com",
     prepareHeaders: (headers, { getState }) => {

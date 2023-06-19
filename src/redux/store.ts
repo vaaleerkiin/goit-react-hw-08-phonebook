@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage";
 import { contactsAPI } from "./contacts/operations";
 import { filterReducer } from "./filterSlice";
 import { authReducer } from "./Auth/authSlice";
-import { api } from "./Auth/operations";
+import { authAPI } from "./Auth/operations";
 
 const persistConfig = {
   key: "token",
@@ -25,7 +25,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer,
+    [authAPI.reducerPath]: authAPI.reducer,
     [contactsAPI.reducerPath]: contactsAPI.reducer,
     auth: persistedReducer,
     filter: filterReducer,
@@ -36,7 +36,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-      .concat(api.middleware)
+      .concat(authAPI.middleware)
       .concat(contactsAPI.middleware),
 });
 

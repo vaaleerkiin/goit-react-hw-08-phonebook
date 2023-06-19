@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "redux/store";
 import { IUser } from "Type&Intarface/IUser";
 
-export const api = createApi({
+export const authAPI = createApi({
+  reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://connections-api.herokuapp.com",
     prepareHeaders: (headers, { getState }) => {
@@ -64,4 +65,4 @@ export const {
   useRegisterMutation,
   useGetUserQuery,
   useLogoutMutation,
-} = api;
+} = authAPI;
