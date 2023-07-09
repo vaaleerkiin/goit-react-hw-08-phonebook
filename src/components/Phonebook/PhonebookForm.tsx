@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useGetContactsQuery } from "redux/contacts/operations";
 import { FormType } from "Type&Intarface/FormType";
+import { MaskedInput } from "antd-mask-input";
 
 export const PhonebookForm: React.FC = () => {
   const [form] = Form.useForm();
@@ -106,25 +107,16 @@ export const PhonebookForm: React.FC = () => {
               { required: true, message: "" },
               {
                 validator: async (_, number) => {
-                  if (!number) {
+                  if (!number || number.includes("_")) {
                     return Promise.reject(
                       new Error("Please input your Number!")
-                    );
-                  } else if (
-                    number.trim().length < 6 ||
-                    number.trim().length > 10
-                  ) {
-                    return Promise.reject(
-                      new Error(
-                        "Please input your Number! (Min is 6 & Max is 10)"
-                      )
                     );
                   }
                 },
               },
             ]}
           >
-            <Input />
+            <MaskedInput mask={"+00(000)-000-00-00"} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
