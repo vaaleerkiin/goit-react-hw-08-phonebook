@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { useEditContactsMutation } from "redux/contacts/operations";
 import { toast } from "react-toastify";
 import { FormType } from "Type&Intarface/FormType";
 import { DataType } from "Type&Intarface/dataType";
 import { MaskedInput } from "antd-mask-input";
+import type { InputRef } from "antd";
 
 interface IProps {
   open: boolean;
@@ -23,6 +24,7 @@ export const PhonebookModal: React.FC<IProps> = ({
   number,
   data,
 }) => {
+  const focusInputRef = useRef<InputRef>(null);
   const [form] = Form.useForm();
   const [editContatctById, { isError, isSuccess }] = useEditContactsMutation();
   const onFinish = (values: FormType) => {
@@ -53,6 +55,12 @@ export const PhonebookModal: React.FC<IProps> = ({
       toast.success("Success");
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    focusInputRef?.current!?.focus({
+      cursor: "end",
+    });
+  });
 
   return (
     <Modal
@@ -92,7 +100,7 @@ export const PhonebookModal: React.FC<IProps> = ({
             },
           ]}
         >
-          <Input />
+          <Input ref={focusInputRef} />
         </Form.Item>
 
         <Form.Item

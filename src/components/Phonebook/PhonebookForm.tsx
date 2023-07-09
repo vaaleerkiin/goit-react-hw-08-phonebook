@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";
 import { ButtonWrap } from "./Phonebook.styled";
@@ -8,10 +8,12 @@ import { toast } from "react-toastify";
 import { useGetContactsQuery } from "redux/contacts/operations";
 import { FormType } from "Type&Intarface/FormType";
 import { MaskedInput } from "antd-mask-input";
+import type { InputRef } from "antd";
 
 export const PhonebookForm: React.FC = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const focusInputRef = useRef<InputRef>(null);
   const [postContatct, { isSuccess, isError }] = useAddContactsMutation();
   const { data } = useGetContactsQuery();
 
@@ -47,6 +49,11 @@ export const PhonebookForm: React.FC = () => {
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    focusInputRef?.current!?.focus({
+      cursor: "start",
+    });
+  });
   return (
     <>
       <ButtonWrap>
@@ -97,7 +104,7 @@ export const PhonebookForm: React.FC = () => {
               },
             ]}
           >
-            <Input />
+            <Input ref={focusInputRef} />
           </Form.Item>
 
           <Form.Item
