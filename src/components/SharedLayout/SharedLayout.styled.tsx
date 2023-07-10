@@ -45,6 +45,9 @@ export const Link = styled(NavLink)`
   &.active {
     color: #1677ff;
   }
+  @media screen and (max-width: 375px) {
+    display: none;
+  }
 `;
 
 export const ButtonLink = styled(NavLink)`

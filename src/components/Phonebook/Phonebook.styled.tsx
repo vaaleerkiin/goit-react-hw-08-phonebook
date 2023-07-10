@@ -42,17 +42,6 @@ export const PhonebookWrap = styled.div`
       hr {
         margin: 0;
       }
-      div {
-        width: 100%;
-        padding-top: 16px;
-        font-size: 32px;
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px;
-        align-items: center;
-      }
     }
   }
   p {
@@ -93,13 +82,26 @@ export const FormsWrap = styled.div`
 `;
 
 export const UserWrap = styled.div`
+  width: 100%;
   display: flex;
   margin: 0;
-  gap: 4px;
+  gap: 10px;
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
   span {
     text-align: center;
   }
+`;
+
+export const ContactWrap = styled.div`
+  width: 100%;
+  padding-top: 16px;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
 `;
