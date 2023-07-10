@@ -1,6 +1,6 @@
-import { Layout } from 'antd';
-import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
+import { Layout } from "antd";
+import styled from "@emotion/styled";
+import { NavLink } from "react-router-dom";
 const { Header, Footer, Content } = Layout;
 
 export const StyledHeader = styled(Header)`
@@ -33,6 +33,7 @@ export const StyledFooter = styled(Footer)`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 6px;
 `;
 
 export const Link = styled(NavLink)`

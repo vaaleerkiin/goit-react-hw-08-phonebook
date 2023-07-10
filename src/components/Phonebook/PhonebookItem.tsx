@@ -4,6 +4,8 @@ import { Button } from "antd";
 import { useDeleteContactsMutation } from "redux/contacts/operations";
 import { PhonebookModal } from "./PhonebookModal";
 import { DataType } from "Type&Intarface/dataType";
+import { UserWrap } from "./Phonebook.styled";
+import { PhoneOutlined } from "@ant-design/icons";
 
 interface IProps {
   name: string;
@@ -38,9 +40,10 @@ export const PhonebookItem: React.FC<IProps> = ({ name, number, id, data }) => {
       <li>
         <hr />
         <div>
-          {name}: {number}
+          <UserWrap>
+            <span>{name}:</span> <span>{number}</span>
+          </UserWrap>
           <Button
-            style={{ marginLeft: "auto" }}
             loading={isLoading}
             disabled={isLoading}
             size="large"
@@ -59,6 +62,13 @@ export const PhonebookItem: React.FC<IProps> = ({ name, number, id, data }) => {
           >
             Delete
           </Button>
+          <Button
+            type="primary"
+            style={{ backgroundColor: "#4BB543" }}
+            icon={<PhoneOutlined />}
+            size="large"
+            href={`tel: ${number}`}
+          />
         </div>
       </li>
       <PhonebookModal

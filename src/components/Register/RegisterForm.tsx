@@ -54,7 +54,7 @@ export const RegisterForm: React.FC = () => {
             },
           ]}
         >
-          <Input />
+          <Input autoFocus />
         </Form.Item>
         <Form.Item
           label="Email"

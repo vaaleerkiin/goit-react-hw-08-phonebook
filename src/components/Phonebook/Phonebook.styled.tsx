@@ -49,6 +49,7 @@ export const PhonebookWrap = styled.div`
         display: flex;
         justify-content: center;
         flex-direction: row;
+        flex-wrap: wrap;
         gap: 16px;
         align-items: center;
       }
@@ -88,5 +89,17 @@ export const FormsWrap = styled.div`
   }
   input::placeholder {
     color: black;
+  }
+`;
+
+export const UserWrap = styled.div`
+  display: flex;
+  margin: 0;
+  gap: 4px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  span {
+    text-align: center;
   }
 `;

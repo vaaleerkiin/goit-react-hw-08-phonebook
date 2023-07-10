@@ -39,7 +39,7 @@ export const LoginForm: React.FC = () => {
           name="email"
           rules={[{ required: true, message: "Please input your mail!" }]}
         >
-          <Input />
+          <Input autoFocus />
         </Form.Item>
         <Form.Item
           label="Password"
