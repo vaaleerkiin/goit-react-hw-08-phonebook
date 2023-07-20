@@ -1,4 +1,5 @@
 export type FormType = {
   name: string;
-  number: string;
+  phone: string;
+  email: string;
 };

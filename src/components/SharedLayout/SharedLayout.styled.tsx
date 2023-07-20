@@ -93,3 +93,25 @@ export const Username = styled.p`
     font-size: 16px;
   }
 `;
+
+export const UserAvatar = styled.img`
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* pointer-events: none; */
+`;
+
+export const ButtonAvatar = styled.button`
+  padding: 0;
+  height: 40px;
+  width: 40px;
+  position: relative;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 8px;
+`;

@@ -38,13 +38,14 @@ export const PhonebookList: React.FC = () => {
       <ul style={{ width: "100%", padding: 0 }}>
         {!isLoading &&
           (data?.length ? (
-            visibleContacts().map(({ name, number, id }) => (
+            visibleContacts().map(({ name, phone, _id, email }) => (
               <PhonebookItem
-                key={id}
-                id={id}
+                key={_id}
+                id={_id}
                 name={name}
-                number={number}
+                phone={phone}
                 data={data}
+                email={email}
               />
             ))
           ) : (

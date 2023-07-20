@@ -1,5 +1,6 @@
 export type DataType = {
   name: string;
-  number: string;
-  id: string;
+  phone: string;
+  _id: string;
+  email: string;
 };

@@ -5,7 +5,7 @@ import { IUser } from "Type&Intarface/IUser";
 export const authAPI = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://connections-api.herokuapp.com",
+    baseUrl: "https://phonebook-0e5s.onrender.com/api",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {
@@ -19,7 +19,7 @@ export const authAPI = createApi({
     login: builder.mutation<
       {
         token: string;
-        user: Pick<IUser, "email" | "name">;
+        user: Pick<IUser, "email" | "name" | "avatarURL">;
       },
       Pick<IUser, "email" | "password">
     >({
@@ -33,12 +33,12 @@ export const authAPI = createApi({
     register: builder.mutation<
       {
         token: string;
-        user: Pick<IUser, "email" | "name">;
+        user: Pick<IUser, "email" | "name" | "avatarURL">;
       },
       Pick<IUser, "email" | "name" | "password">
     >({
       query: (credentials) => ({
-        url: "/users/signup",
+        url: "/users/register",
         method: "POST",
         body: credentials,
         invalidatesTags: ["Auth"],

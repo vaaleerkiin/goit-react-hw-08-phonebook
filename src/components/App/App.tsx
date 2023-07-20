@@ -12,7 +12,7 @@ const Login = lazy(() => import("pages/Login"));
 const Register = lazy(() => import("pages/Register"));
 
 export const App: React.FC = () => {
-  const { isLoading } = useGetUserQuery();
+  const { isLoading, refetch } = useGetUserQuery();
 
   return (
     <>
@@ -31,7 +31,7 @@ export const App: React.FC = () => {
         </div>
       ) : (
         <Routes>
-          <Route path="/" element={<SharedLayout />}>
+          <Route path="/" element={<SharedLayout refetch={refetch} />}>
             <Route index element={<Navigate to="contacts" />} />
             <Route
               path="contacts"

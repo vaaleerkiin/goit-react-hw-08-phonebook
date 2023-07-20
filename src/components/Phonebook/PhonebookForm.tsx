@@ -71,7 +71,7 @@ export const PhonebookForm: React.FC = () => {
           name="create"
           labelCol={{ span: 4 }}
           style={{ maxWidth: 600 }}
-          initialValues={{ name: "", number: "" }}
+          initialValues={{ name: "", phone: "", email: "" }}
           onFinish={onFinish}
         >
           <Form.Item
@@ -99,17 +99,19 @@ export const PhonebookForm: React.FC = () => {
           >
             <Input />
           </Form.Item>
-
+          <Form.Item label="Email" name="email">
+            <Input />
+          </Form.Item>
           <Form.Item
-            label="Number"
-            name="number"
+            label="Phone"
+            name="phone"
             rules={[
               { required: true, message: "" },
               {
-                validator: async (_, number) => {
-                  if (!number || number.includes("_")) {
+                validator: async (_, phone) => {
+                  if (!phone || phone.includes("_")) {
                     return Promise.reject(
-                      new Error("Please input your Number!")
+                      new Error("Please input your phone!")
                     );
                   }
                 },

@@ -6,7 +6,7 @@ import { FormType } from "Type&Intarface/FormType";
 export const contactsAPI = createApi({
   reducerPath: "contactsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://connections-api.herokuapp.com",
+    baseUrl: "https://phonebook-0e5s.onrender.com/api",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {
@@ -41,7 +41,7 @@ export const contactsAPI = createApi({
     editContacts: builder.mutation<void, { id: string; values: FormType }>({
       query: ({ id, values }) => ({
         url: `/contacts/${id}`,
-        method: "PATCH",
+        method: "PUT",
         body: values,
       }),
       invalidatesTags: ["Contacts"],

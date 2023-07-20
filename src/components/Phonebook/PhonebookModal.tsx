@@ -10,7 +10,8 @@ interface IProps {
   open: boolean;
   toogleModal: () => void;
   name: string;
-  number: string;
+  phone: string;
+  email: string;
   id: string;
   data: DataType[];
 }
@@ -20,26 +21,16 @@ export const PhonebookModal: React.FC<IProps> = ({
   toogleModal,
   id,
   name,
-  number,
+  phone,
   data,
+  email,
 }) => {
   const [form] = Form.useForm();
   const [editContatctById, { isError, isSuccess }] = useEditContactsMutation();
   const onFinish = (values: FormType) => {
     toogleModal();
 
-    if (
-      data.some(
-        (el) =>
-          values.name.toLowerCase().includes(el.name.toLowerCase()) &&
-          values.number.toLowerCase().includes(el.number.toLowerCase())
-      )
-    ) {
-      toast.error(`${values.name} is already in contacts`);
-      return;
-    } else {
-      editContatctById({ id, values });
-    }
+    editContatctById({ id, values });
   };
 
   useEffect(() => {
@@ -67,7 +58,11 @@ export const PhonebookModal: React.FC<IProps> = ({
         name={`edit ${id}`}
         labelCol={{ span: 4 }}
         style={{ maxWidth: 600 }}
-        initialValues={{ name: `${name}`, number: `${number}` }}
+        initialValues={{
+          name: `${name}`,
+          phone: `${phone}`,
+          email: `${email}`,
+        }}
         onFinish={onFinish}
         onFinishFailed={() => form.resetFields}
       >
@@ -94,16 +89,18 @@ export const PhonebookModal: React.FC<IProps> = ({
         >
           <Input />
         </Form.Item>
-
+        <Form.Item label="Email" name="email">
+          <Input />
+        </Form.Item>
         <Form.Item
-          label="Number"
-          name="number"
+          label="Phone"
+          name="phone"
           rules={[
             { required: true, message: "" },
             {
-              validator: async (_, number) => {
-                if (!number || number.includes("_")) {
-                  return Promise.reject(new Error("Please input your Number!"));
+              validator: async (_, phone) => {
+                if (!phone || phone.includes("_")) {
+                  return Promise.reject(new Error("Please input your phone!"));
                 }
               },
             },

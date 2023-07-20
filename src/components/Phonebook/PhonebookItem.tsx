@@ -5,16 +5,23 @@ import { useDeleteContactsMutation } from "redux/contacts/operations";
 import { PhonebookModal } from "./PhonebookModal";
 import { DataType } from "Type&Intarface/dataType";
 import { ContactWrap, UserWrap } from "./Phonebook.styled";
-import { PhoneOutlined } from "@ant-design/icons";
+import { PhoneOutlined, MailOutlined } from "@ant-design/icons";
 
 interface IProps {
   name: string;
-  number: string;
+  phone: string;
   id: string;
   data: DataType[];
+  email: string;
 }
 
-export const PhonebookItem: React.FC<IProps> = ({ name, number, id, data }) => {
+export const PhonebookItem: React.FC<IProps> = ({
+  name,
+  phone,
+  email,
+  id,
+  data,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteContatctById, { isLoading, isSuccess, isError }] =
     useDeleteContactsMutation();
@@ -42,7 +49,7 @@ export const PhonebookItem: React.FC<IProps> = ({ name, number, id, data }) => {
         <ContactWrap>
           <UserWrap>
             <span>{name}:</span>
-            <span>{number}</span>
+            <span>{phone}</span>
           </UserWrap>
           <Button
             loading={isLoading}
@@ -68,8 +75,16 @@ export const PhonebookItem: React.FC<IProps> = ({ name, number, id, data }) => {
             style={{ backgroundColor: "#4BB543" }}
             icon={<PhoneOutlined />}
             size="large"
-            href={`tel: ${number}`}
+            href={`tel:${phone}`}
           />
+          {email && (
+            <Button
+              type="primary"
+              icon={<MailOutlined />}
+              size="large"
+              href={`mailto:${email}`}
+            />
+          )}
         </ContactWrap>
       </li>
       <PhonebookModal
@@ -77,8 +92,9 @@ export const PhonebookItem: React.FC<IProps> = ({ name, number, id, data }) => {
         toogleModal={toogleModal}
         id={id}
         name={name}
-        number={number}
+        phone={phone}
         data={data}
+        email={email}
       />
     </>
   );
