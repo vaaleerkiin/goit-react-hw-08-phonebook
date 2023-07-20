@@ -3,4 +3,5 @@ export type DataType = {
   phone: string;
   _id: string;
   email: string;
+  favorite: boolean;
 };

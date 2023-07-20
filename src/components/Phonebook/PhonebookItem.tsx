@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Button } from "antd";
-import { useDeleteContactsMutation } from "redux/contacts/operations";
+import { Button, Rate } from "antd";
+import {
+  useDeleteContactsMutation,
+  useFavoriteMutation,
+} from "redux/contacts/operations";
 import { PhonebookModal } from "./PhonebookModal";
 import { DataType } from "Type&Intarface/dataType";
 import { ContactWrap, UserWrap } from "./Phonebook.styled";
@@ -13,15 +16,18 @@ interface IProps {
   id: string;
   data: DataType[];
   email: string;
+  favorite: boolean;
 }
 
 export const PhonebookItem: React.FC<IProps> = ({
   name,
   phone,
   email,
+  favorite,
   id,
   data,
 }) => {
+  const [toogleFavorite] = useFavoriteMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteContatctById, { isLoading, isSuccess, isError }] =
     useDeleteContactsMutation();
@@ -50,6 +56,14 @@ export const PhonebookItem: React.FC<IProps> = ({
           <UserWrap>
             <span>{name}:</span>
             <span>{phone}</span>
+            <Rate
+              count={1}
+              style={{ padding: 0, width: 50, fontSize: 28 }}
+              value={favorite ? 1 : 0}
+              onChange={() => {
+                toogleFavorite({ id, favorite: !favorite });
+              }}
+            />
           </UserWrap>
           <Button
             loading={isLoading}

@@ -38,11 +38,20 @@ export const contactsAPI = createApi({
       }),
       invalidatesTags: ["Contacts"],
     }),
+
     editContacts: builder.mutation<void, { id: string; values: FormType }>({
       query: ({ id, values }) => ({
         url: `/contacts/${id}`,
         method: "PUT",
         body: values,
+      }),
+      invalidatesTags: ["Contacts"],
+    }),
+    favorite: builder.mutation<void, { id: string; favorite: boolean }>({
+      query: ({ id, favorite }) => ({
+        url: `/contacts/${id}/favorite`,
+        method: "PATCH",
+        body: { favorite },
       }),
       invalidatesTags: ["Contacts"],
     }),
@@ -54,5 +63,7 @@ export const {
   useAddContactsMutation,
   useDeleteContactsMutation,
   useEditContactsMutation,
+  useFavoriteMutation,
 } = contactsAPI;
+
 export const contactsReducer = contactsAPI.reducer;

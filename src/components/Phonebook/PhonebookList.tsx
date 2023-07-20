@@ -4,18 +4,11 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { PhonebookItem } from "./PhonebookItem";
 import { RootState } from "redux/store";
 import { useGetContactsQuery } from "redux/contacts/operations";
-import { DataType } from "Type&Intarface/dataType";
+import React, { useMemo } from "react";
 
 export const PhonebookList: React.FC = () => {
   const filter = useSelector((state: RootState) => state.filter);
   const { data, isLoading, error } = useGetContactsQuery();
-  const visibleContacts = (): DataType[] | [] => {
-    return data
-      ? data.filter(({ name }) =>
-          name.toLowerCase().includes(filter.toLowerCase())
-        )
-      : [];
-  };
 
   const errorHandle = () => {
     if (error && "error" in error) {
@@ -24,6 +17,37 @@ export const PhonebookList: React.FC = () => {
       toast.error(error.error);
     }
   };
+
+  const contatctList = useMemo(
+    () =>
+      data
+        ? data
+            .filter(({ name }) =>
+              name.toLowerCase().includes(filter.toLowerCase())
+            )
+            .sort((a, b) => {
+              if (a.favorite === true && b.favorite === false) {
+                return -1;
+              }
+              if (b.favorite === true && a.favorite === false) {
+                return 1;
+              }
+              return 0;
+            })
+            .map(({ name, phone, _id, email, favorite }) => (
+              <PhonebookItem
+                key={_id}
+                id={_id}
+                name={name}
+                phone={phone}
+                data={data}
+                email={email}
+                favorite={favorite}
+              />
+            ))
+        : [],
+    [data, filter]
+  );
 
   return (
     <>
@@ -38,16 +62,7 @@ export const PhonebookList: React.FC = () => {
       <ul style={{ width: "100%", padding: 0 }}>
         {!isLoading &&
           (data?.length ? (
-            visibleContacts().map(({ name, phone, _id, email }) => (
-              <PhonebookItem
-                key={_id}
-                id={_id}
-                name={name}
-                phone={phone}
-                data={data}
-                email={email}
-              />
-            ))
+            contatctList
           ) : (
             <li>
               <hr />
