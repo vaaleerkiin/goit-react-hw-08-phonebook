@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Button } from "antd";
 import { useLogoutMutation } from "redux/Auth/operations";
-import { DocsModal } from "components/DocsModal/DocsModal";
+
 import MoonLoader from "react-spinners/MoonLoader";
 import { RootState } from "redux/store";
 import { PhonebookAvatar } from "components/Phonebook/PhonebookAvatar";
@@ -95,7 +95,13 @@ export const SharedLayout: React.FC<IProps> = ({ refetch }) => {
         </Suspense>
       </StyledContent>
       <StyledFooter>
-        <DocsModal />
+        <a
+          href="https://github.com/vaaleerkiin/goit-react-hw-08-phonebook"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://github.com/vaaleerkiin/goit-react-hw-08-phonebook
+        </a>
       </StyledFooter>
     </>
   );
