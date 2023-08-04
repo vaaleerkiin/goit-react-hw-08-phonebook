@@ -30,14 +30,7 @@ const authSlice = createSlice({
       )
       .addMatcher(authAPI.endpoints.login.matchRejected, () => {})
       .addMatcher(authAPI.endpoints.register.matchPending, () => {})
-      .addMatcher(
-        authAPI.endpoints.register.matchFulfilled,
-        (state, { payload }) => {
-          state.user = payload.user;
-          state.token = payload.token;
-          state.isLoggedIn = true;
-        }
-      )
+      .addMatcher(authAPI.endpoints.register.matchFulfilled, () => {})
       .addMatcher(authAPI.endpoints.register.matchRejected, () => {})
       .addMatcher(authAPI.endpoints.getUser.matchPending, () => {})
       .addMatcher(

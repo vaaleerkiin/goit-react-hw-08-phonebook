@@ -1,15 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Form, Input } from "antd";
-import { useRegisterMutation } from "redux/Auth/operations";
+import { useLoginMutation, useRegisterMutation } from "redux/Auth/operations";
 import { IUser } from "Type&Intarface/IUser";
 
 export const RegisterForm: React.FC = () => {
   const [postRegister, { isUninitialized, isSuccess, isError }] =
     useRegisterMutation();
-
-  const onFinish = (values: IUser) => {
-    postRegister(values);
+  const [postLogin] = useLoginMutation();
+  const [formValue, setFormValue] = useState<Pick<
+    IUser,
+    "email" | "password"
+  > | void>();
+  const onFinish = async (values: IUser) => {
+    await postRegister(values);
+    setFormValue(values);
   };
 
   useEffect(() => {
@@ -19,10 +24,16 @@ export const RegisterForm: React.FC = () => {
   }, [isError, isUninitialized]);
 
   useEffect(() => {
-    if (!isUninitialized && isSuccess) {
+    if (
+      !isUninitialized &&
+      isSuccess &&
+      formValue?.email &&
+      formValue?.password
+    ) {
       toast.success("Success");
+      postLogin({ email: formValue.email, password: formValue.password });
     }
-  }, [isSuccess, isUninitialized]);
+  }, [formValue, isSuccess, isUninitialized, postLogin]);
 
   return (
     <>
