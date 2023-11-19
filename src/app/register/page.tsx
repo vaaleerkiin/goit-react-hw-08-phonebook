@@ -16,7 +16,7 @@ import {
 import { signIn, useSession } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
@@ -26,12 +26,11 @@ type Inputs = {
 };
 
 export default function Register() {
-  const [authData, setAuthData] = useState<any>({});
   const session = useSession();
   const router = useRouter();
   const toast = useToast();
   const searchParams = useSearchParams();
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   const handleShow = () => setShow(!show);
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
@@ -39,7 +38,7 @@ export default function Register() {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
@@ -48,35 +47,29 @@ export default function Register() {
       email: values.email,
       password: values.password,
       callbackUrl: callbackUrl,
-    })
-      .then((res) => {
-        if (res?.error) {
-          toast({
-            position: "top",
-            description: JSON.parse(res.error)?.message,
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-          throw new Error();
-        } else {
-          toast({
-            position: "top",
-            description: "Success",
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-          });
-        }
-        return res;
-      })
-      .then(setAuthData);
+    }).then((res) => {
+      if (res?.error) {
+        toast({
+          position: "top",
+          description: JSON.parse(res.error)?.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+        throw new Error();
+      } else {
+        toast({
+          position: "top",
+          description: "Success",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+      return res;
+    });
   };
-  useEffect(() => {
-    if (session.status === "authenticated" && authData?.ok && authData?.url) {
-      router.push(callbackUrl);
-    }
-  }, [authData, session, router, callbackUrl]);
+
   return (
     <Container as="section" pt="50px" minH="calc(100vh - 128px)">
       <Box maxW="600px" bgColor="white" borderRadius="12px">
@@ -164,7 +157,7 @@ export default function Register() {
           <Button
             mt={4}
             colorScheme="blue"
-            isLoading={isSubmitting}
+            isLoading={session.status == "loading"}
             type="submit"
           >
             Submit
