@@ -16,7 +16,7 @@ import {
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
@@ -27,6 +27,7 @@ type Inputs = {
 export default function Login() {
   const session = useSession();
   const router = useRouter();
+  const [authData, setAuthData] = useState<any>();
   const [show, setShow] = React.useState(false);
   const handleShow = () => setShow(!show);
   const toast = useToast();
@@ -41,33 +42,41 @@ export default function Login() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
-    await signIn("login", {
+    const res = await signIn("login", {
       email: values.email,
       password: values.password,
       redirect: false,
       callbackUrl: callbackUrl,
-    }).then((res) => {
-      if (res?.error) {
-        toast({
-          position: "top",
-          description: JSON.parse(res.error)?.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-        throw new Error();
-      } else {
-        toast({
-          position: "top",
-          description: "Success",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-    });
-    router.push(callbackUrl);
+    })
+      .then((res) => {
+        if (res?.error) {
+          toast({
+            position: "top",
+            description: JSON.parse(res.error)?.message,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+          throw new Error();
+        } else {
+          toast({
+            position: "top",
+            description: "Success",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+        return res;
+      })
+      .then(setAuthData);
   };
+
+  useEffect(() => {
+    if (session.status === "authenticated" && authData?.ok && authData?.url) {
+      router.push(callbackUrl);
+    }
+  }, [authData, session, router, callbackUrl]);
 
   return (
     <Container as="section" pt="50px" minH="calc(100vh - 128px)">
