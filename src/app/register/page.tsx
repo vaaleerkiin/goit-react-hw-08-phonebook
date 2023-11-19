@@ -47,11 +47,10 @@ export default function Register() {
       email: values.email,
       password: values.password,
       redirect: false,
+      callbackUrl: callbackUrl,
     })
       .then((res) => {
         if (res?.error) {
-          console.log(res.error);
-
           toast({
             position: "top",
             description: JSON.parse(res.error)?.message,
@@ -59,6 +58,7 @@ export default function Register() {
             duration: 9000,
             isClosable: true,
           });
+          throw new Error();
         } else {
           toast({
             position: "top",
