@@ -2,7 +2,7 @@
 
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/next-js";
-import { Button, HStack } from "@chakra-ui/react";
+import { Button, HStack, Spinner, Text } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
@@ -23,7 +23,11 @@ export const Navigation = () => {
       >
         Contacts
       </Link>
-      {session.status !== "authenticated" ? (
+      {session.status !== "loading" && session.status == "authenticated" && (
+        <Text noOfLines={1}>{session.data.user.name}</Text>
+      )}
+      {session.status === "loading" && <Spinner size="lg" />}
+      {session.status !== "loading" && session.status !== "authenticated" && (
         <HStack as="div">
           <Link
             as={NextLink}
@@ -50,11 +54,9 @@ export const Navigation = () => {
             Register
           </Link>
         </HStack>
-      ) : (
-        <Button
-          colorScheme="blue"
-          onClick={() => signOut({ callbackUrl: "/" })}
-        >
+      )}
+      {session.status !== "loading" && session.status === "authenticated" && (
+        <Button colorScheme="blue" onClick={() => signOut()}>
           Sign Out
         </Button>
       )}

@@ -1,5 +1,7 @@
+import { BASE_URL } from "@/constants/BASE_URL";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { signOut } from "next-auth/react";
 
 const handler = NextAuth({
   providers: [
@@ -17,20 +19,17 @@ const handler = NextAuth({
         if (!credentials?.email || !credentials?.password || !credentials?.name)
           return null;
 
-        const res = await fetch(
-          "https://phonebook-0e5s.onrender.com/api/users/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: credentials.name,
-              email: credentials.email,
-              password: credentials.password,
-            }),
-          }
-        );
+        const res = await fetch(`${BASE_URL}/users/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: credentials.name,
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        });
         if (!res.ok) {
           const resBody = await res.text();
           throw new Error(resBody);
@@ -49,19 +48,16 @@ const handler = NextAuth({
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const res = await fetch(
-          "https://phonebook-0e5s.onrender.com/api/users/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: credentials.email,
-              password: credentials.password,
-            }),
-          }
-        );
+        const res = await fetch(`${BASE_URL}/users/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        });
         if (!res.ok) {
           const resBody = await res.text();
           throw new Error(resBody);
@@ -77,15 +73,40 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      return { ...user, ...token };
     },
 
     async session({ session, token }) {
-      session.user = token as any;
+      try {
+        const res = await fetch(`${BASE_URL}/users/current`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.token}`,
+          },
+        });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        data.token = token.token;
+        session.user = data;
+      } catch (error) {
+        session.error = "invalid-version";
+      }
+
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_URL,
+  events: {
+    signOut({ token }) {
+      fetch(`${BASE_URL}/users/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      });
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };

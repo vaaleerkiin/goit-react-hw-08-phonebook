@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   Button,
@@ -46,28 +47,29 @@ export default function Register() {
       email: values.email,
       password: values.password,
       redirect: false,
-    }).then((res) => {
-      if (res?.error) {
-        console.log(res.error);
+    })
+      .then((res) => {
+        if (res?.error) {
+          console.log(res.error);
 
-        toast({
-          position: "top",
-          description: JSON.parse(res.error)?.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          position: "top",
-          description: "Success",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-        router.push(callbackUrl);
-      }
-    });
+          toast({
+            position: "top",
+            description: JSON.parse(res.error)?.message,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            position: "top",
+            description: "Success",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      })
+      .then(() => router.push(callbackUrl));
   };
 
   return (
@@ -93,6 +95,7 @@ export default function Register() {
             <Input
               id="name"
               placeholder="Enter name"
+              type="text"
               {...register("name", {
                 required: "This is required",
                 minLength: {
@@ -113,6 +116,7 @@ export default function Register() {
             <Input
               id="email"
               placeholder="Enter email"
+              type="email"
               {...register("email", {
                 required: "This is required",
                 pattern: {

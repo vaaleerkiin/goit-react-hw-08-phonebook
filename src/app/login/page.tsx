@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   Button,
@@ -44,26 +45,27 @@ export default function Login() {
       email: values.email,
       password: values.password,
       redirect: false,
-    }).then((res) => {
-      if (res?.error) {
-        toast({
-          position: "top",
-          description: JSON.parse(res.error).message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          position: "top",
-          description: "Success",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-        router.push(callbackUrl);
-      }
-    });
+    })
+      .then((res) => {
+        if (res?.error) {
+          toast({
+            position: "top",
+            description: JSON.parse(res.error).message,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            position: "top",
+            description: "Success",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      })
+      .then(() => router.push(callbackUrl));
   };
 
   return (
