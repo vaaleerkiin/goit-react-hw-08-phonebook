@@ -47,7 +47,6 @@ export default function Register() {
       name: values.name,
       email: values.email,
       password: values.password,
-      redirect: false,
       callbackUrl: callbackUrl,
     })
       .then((res) => {

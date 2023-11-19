@@ -45,7 +45,6 @@ export default function Login() {
     const res = await signIn("login", {
       email: values.email,
       password: values.password,
-      redirect: false,
       callbackUrl: callbackUrl,
     })
       .then((res) => {
