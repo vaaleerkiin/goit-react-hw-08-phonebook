@@ -1,7 +1,6 @@
 import { BASE_URL } from "@/constants/BASE_URL";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { signOut } from "next-auth/react";
 
 const handler = NextAuth({
   providers: [
