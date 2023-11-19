@@ -1,20 +1,26 @@
+"use client";
+
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import BeatLoader from "react-spinners/BeatLoader";
 import { PhonebookItem } from "./PhonebookItem";
-import { RootState } from "redux/store";
-import { useGetContactsQuery } from "redux/contacts/operations";
+import { RootState } from "@/redux/store";
+import { useGetContactsQuery } from "@/redux/contacts/operations";
 import React, { useMemo } from "react";
+import { useToast, VStack, Spinner, Flex } from "@chakra-ui/react";
 
 export const PhonebookList: React.FC = () => {
   const filter = useSelector((state: RootState) => state.filter);
+  const toast = useToast();
   const { data, isLoading, error } = useGetContactsQuery();
 
   const errorHandle = () => {
     if (error && "error" in error) {
-      console.log(error);
-
-      toast.error(error.error);
+      toast({
+        position: "top",
+        description: error.error,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -52,14 +58,11 @@ export const PhonebookList: React.FC = () => {
   return (
     <>
       {isLoading && (
-        <BeatLoader
-          cssOverride={{
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        />
+        <Flex alignItems="center" justifyContent="center" pt="12px">
+          <Spinner size="xl" />
+        </Flex>
       )}
-      <ul style={{ width: "100%", padding: 0 }}>
+      <VStack listStyleType="none" p="16px 24px">
         {!isLoading &&
           (data?.length ? (
             contatctList
@@ -69,7 +72,7 @@ export const PhonebookList: React.FC = () => {
               <h3 style={{ textAlign: "center" }}>Nothing here</h3>
             </li>
           ))}
-      </ul>
+      </VStack>
       {errorHandle()}
     </>
   );

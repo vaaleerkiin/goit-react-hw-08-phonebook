@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { Button, Rate } from "antd";
+import { useEffect } from "react";
+
 import {
   useDeleteContactsMutation,
   useFavoriteMutation,
-} from "redux/contacts/operations";
+} from "@/redux/contacts/operations";
 import { PhonebookModal } from "./PhonebookModal";
-import { DataType } from "Type&Intarface/dataType";
-import { ContactWrap, UserWrap } from "./Phonebook.styled";
-import { PhoneOutlined, MailOutlined } from "@ant-design/icons";
+import { DataType } from "@/types/dataType";
+
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Stack,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import { StarIcon, PhoneIcon, EmailIcon } from "@chakra-ui/icons";
 
 interface IProps {
   name: string;
@@ -27,89 +35,85 @@ export const PhonebookItem: React.FC<IProps> = ({
   id,
   data,
 }) => {
+  const toast = useToast();
   const [toogleFavorite] = useFavoriteMutation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteContatctById, { isLoading, isSuccess, isError }] =
     useDeleteContactsMutation();
 
-  const toogleModal = () => {
-    setIsModalOpen((prevState) => !prevState);
-  };
-
   useEffect(() => {
     if (isError) {
-      toast.error("Fail");
+      toast({
+        position: "top",
+        description: "Fail",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
-  }, [isError]);
+  }, [isError, toast]);
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Success");
+      toast({
+        position: "top",
+        description: "Success",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     }
-  }, [isSuccess]);
+  }, [isSuccess, toast]);
 
   return (
     <>
-      <li>
-        <hr />
-        <ContactWrap>
-          <UserWrap>
-            <span>{name}:</span>
-            <span>{phone}</span>
-            <Rate
-              count={1}
-              style={{ padding: 0, width: 50, fontSize: 28 }}
-              value={favorite ? 1 : 0}
-              onChange={() => {
-                toogleFavorite({ id, favorite: !favorite });
-              }}
-            />
-          </UserWrap>
+      <Flex
+        as="li"
+        w="100%"
+        flexWrap="wrap"
+        justifyContent="space-between"
+        alignItems="center"
+        gap="6px"
+      >
+        <HStack justifyContent="center">
+          <Text size="lg">{name}: </Text>
+          <Text flex="1" size="lg" noOfLines={1}>
+            {phone}
+          </Text>
+        </HStack>
+        <HStack justifyContent="center" flexWrap="wrap">
           <Button
-            loading={isLoading}
-            disabled={isLoading}
-            size="large"
-            onClick={toogleModal}
+            onClick={() => {
+              toogleFavorite({ id, favorite: !favorite });
+            }}
           >
-            Edit
+            <StarIcon color={favorite ? "yellow.300" : "gray.300"} />
           </Button>
+          <PhonebookModal
+            name={name}
+            data={data}
+            id={id}
+            email={email}
+            phone={phone}
+          />
           <Button
-            loading={isLoading}
-            disabled={isLoading}
-            type="primary"
-            size="large"
+            colorScheme="red"
+            isLoading={isLoading}
             onClick={() => {
               deleteContatctById(id);
             }}
           >
             Delete
           </Button>
-          <Button
-            type="primary"
-            style={{ backgroundColor: "#4BB543" }}
-            icon={<PhoneOutlined />}
-            size="large"
-            href={`tel:${phone}`}
-          />
+          <Button as="a" colorScheme="green" href={`tel:${phone}`}>
+            <PhoneIcon />
+          </Button>
           {email && (
-            <Button
-              type="primary"
-              icon={<MailOutlined />}
-              size="large"
-              href={`mailto:${email}`}
-            />
+            <Button as="a" colorScheme="blue" href={`mailto:${email}`}>
+              <EmailIcon />
+            </Button>
           )}
-        </ContactWrap>
-      </li>
-      <PhonebookModal
-        open={isModalOpen}
-        toogleModal={toogleModal}
-        id={id}
-        name={name}
-        phone={phone}
-        data={data}
-        email={email}
-      />
+        </HStack>
+      </Flex>
     </>
   );
 };

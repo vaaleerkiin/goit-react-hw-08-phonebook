@@ -1,7 +1,9 @@
+"use client";
 import { useSelector, useDispatch } from "react-redux";
-import { changeFilter } from "redux/filterSlice";
-import { Input } from "antd";
-import { RootState } from "redux/store";
+import { changeFilter } from "@/redux/filterSlice";
+
+import { RootState } from "@/redux/store";
+import { Input } from "@chakra-ui/react";
 
 export const PhonebookFilter: React.FC = () => {
   const state = useSelector((state: RootState) => state.filter);
@@ -12,7 +14,6 @@ export const PhonebookFilter: React.FC = () => {
       name="filter"
       placeholder="Find contacts by name"
       value={state}
-      style={{ maxWidth: 200 }}
       onChange={(e) => dispatch(changeFilter({ value: e.target.value }))}
     />
   );

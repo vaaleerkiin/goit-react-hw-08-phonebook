@@ -1,16 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { RootState } from "redux/store";
-import { DataType } from "Type&Intarface/dataType";
-import { FormType } from "Type&Intarface/FormType";
+import { DataType } from "@/types/dataType";
+import { FormType } from "@/types/FormType";
+import { getSession } from "next-auth/react";
+import { BASE_URL } from "@/constants/BASE_URL";
 
 export const contactsAPI = createApi({
   reducerPath: "contactsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://phonebook-0e5s.onrender.com/api",
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+    baseUrl: BASE_URL,
+    prepareHeaders: async (headers, { getState }) => {
+      const session = await getSession();
+
+      if (session) {
+        headers.set("authorization", `Bearer ${session.user.token}`);
       }
       return headers;
     },
