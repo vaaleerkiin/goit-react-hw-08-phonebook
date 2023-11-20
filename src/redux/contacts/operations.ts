@@ -3,35 +3,30 @@ import { DataType } from "@/types/dataType";
 import { FormType } from "@/types/FormType";
 import { getSession } from "next-auth/react";
 import { BASE_URL } from "@/constants/BASE_URL";
+import { axiosBaseQuery } from "@/axiosBaseQuery";
 
 export const contactsAPI = createApi({
   reducerPath: "contactsApi",
-  baseQuery: fetchBaseQuery({
+  baseQuery: axiosBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: async (headers, { getState }) => {
-      const session = await getSession();
-
-      if (session) {
-        headers.set("authorization", `Bearer ${session.user.token}`);
-      }
-      return headers;
-    },
   }),
   tagTypes: ["Contacts"],
   endpoints: (builder) => ({
     getContacts: builder.query<DataType[], void>({
-      query: () => "/contacts",
+      query: () => ({
+        url: "/contacts",
+        method: "GET",
+      }),
       providesTags: ["Contacts"],
     }),
     addContacts: builder.mutation<DataType, FormType>({
       query: (values) => ({
         url: "/contacts",
         method: "POST",
-        body: values,
+        data: values,
       }),
       invalidatesTags: ["Contacts"],
       transformResponse: (response: { data: DataType }) => response.data,
-      transformErrorResponse: (response) => response.status,
     }),
     deleteContacts: builder.mutation<void, string>({
       query: (Id) => ({
@@ -45,7 +40,7 @@ export const contactsAPI = createApi({
       query: ({ id, values }) => ({
         url: `/contacts/${id}`,
         method: "PUT",
-        body: values,
+        data: values,
       }),
       invalidatesTags: ["Contacts"],
     }),
@@ -53,7 +48,7 @@ export const contactsAPI = createApi({
       query: ({ id, favorite }) => ({
         url: `/contacts/${id}/favorite`,
         method: "PATCH",
-        body: { favorite },
+        data: { favorite },
       }),
       invalidatesTags: ["Contacts"],
     }),
