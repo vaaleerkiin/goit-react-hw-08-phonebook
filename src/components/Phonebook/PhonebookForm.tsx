@@ -24,6 +24,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 
 type Inputs = {
   name: string;
@@ -32,6 +33,7 @@ type Inputs = {
 };
 
 export const PhonebookForm: React.FC = () => {
+  const session = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -91,7 +93,10 @@ export const PhonebookForm: React.FC = () => {
   };
   return (
     <>
-      <Button onClick={onOpen}>Add contact</Button>
+      {session.status !== "loading" && (
+        <Button onClick={onOpen}>Add contact</Button>
+      )}
+
       <Modal
         isOpen={isOpen}
         onClose={() => {
