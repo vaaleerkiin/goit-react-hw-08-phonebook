@@ -10,19 +10,7 @@ import { useToast, VStack, Spinner, Flex } from "@chakra-ui/react";
 export const PhonebookList: React.FC = () => {
   const filter = useSelector((state: RootState) => state.filter);
   const toast = useToast();
-  const { data, isLoading, error } = useGetContactsQuery();
-
-  const errorHandle = () => {
-    if (error && "error" in error) {
-      toast({
-        position: "top",
-        description: error.error,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  };
+  const { data, isLoading } = useGetContactsQuery();
 
   const contatctList = useMemo(
     () =>
@@ -73,7 +61,6 @@ export const PhonebookList: React.FC = () => {
             </li>
           ))}
       </VStack>
-      {errorHandle()}
     </>
   );
 };
