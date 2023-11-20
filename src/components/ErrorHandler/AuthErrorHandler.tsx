@@ -9,11 +9,10 @@ export const AuthErrorHandler = ({
   children: React.ReactNode;
 }) => {
   const { data: session } = useSession();
-  const router = useRouter();
 
   useEffect(() => {
     if (session?.error === "invalid-version") signOut();
-  }, [router, session]);
+  }, [session]);
 
   return <>{children}</>;
 };
