@@ -76,8 +76,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
-      console.log(token);
-
       try {
         const res = await fetch(`${BASE_URL}/users/current`, {
           headers: {
