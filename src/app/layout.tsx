@@ -6,6 +6,8 @@ import { Provides } from "@/components/Providers/Providers";
 import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
 import { Container } from "@chakra-ui/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,16 +16,18 @@ export const metadata: Metadata = {
   description: "Phonebook",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const serverSession = await getServerSession(authOptions);
+
   return (
     <html>
       <body className={inter.className}>
         <Provides>
-          <Header></Header>
+          <Header serverSession={serverSession} />
           <Container bgColor="#e3e3e3" as="main" minW="100%">
             {children}
           </Container>

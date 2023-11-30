@@ -1,8 +1,8 @@
 import { BASE_URL } from "@/constants/BASE_URL";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       id: "register",
@@ -76,6 +76,8 @@ const handler = NextAuth({
     },
 
     async session({ session, token }) {
+      console.log(token);
+
       try {
         const res = await fetch(`${BASE_URL}/users/current`, {
           headers: {
@@ -106,6 +108,7 @@ const handler = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
