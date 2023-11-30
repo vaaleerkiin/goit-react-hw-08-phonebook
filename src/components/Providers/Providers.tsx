@@ -5,7 +5,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { FC, ReactNode } from "react";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
-import { AuthErrorHandler } from "../ErrorHandler/AuthErrorHandler";
+import { UnauthenticatedHandler } from "../ErrorHandler/UnauthenticatedHandler";
 
 export const Provides: FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -13,7 +13,7 @@ export const Provides: FC<{ children: ReactNode }> = ({ children }) => {
       <Provider store={store}>
         <CacheProvider>
           <ChakraProvider>
-            <AuthErrorHandler>{children}</AuthErrorHandler>
+            <UnauthenticatedHandler>{children}</UnauthenticatedHandler>
           </ChakraProvider>
         </CacheProvider>
       </Provider>

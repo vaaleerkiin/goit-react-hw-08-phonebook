@@ -3,7 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export const AuthErrorHandler = ({
+export const UnauthenticatedHandler = ({
   children,
 }: {
   children: React.ReactNode;

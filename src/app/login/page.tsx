@@ -26,8 +26,8 @@ type Inputs = {
 
 export default function Login() {
   const session = useSession();
-
   const [show, setShow] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const handleShow = () => setShow(!show);
   const toast = useToast();
   const searchParams = useSearchParams();
@@ -41,6 +41,7 @@ export default function Login() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
+    setLoading(true);
     await signIn("login", {
       email: values.email,
       password: values.password,
@@ -66,6 +67,7 @@ export default function Login() {
       }
       return res;
     });
+    setLoading(false);
   };
 
   return (
@@ -132,7 +134,7 @@ export default function Login() {
           <Button
             mt={4}
             colorScheme="blue"
-            isLoading={session.status == "loading"}
+            isLoading={session.status == "loading" || isLoading}
             type="submit"
           >
             Submit
