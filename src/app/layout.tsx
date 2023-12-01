@@ -7,7 +7,7 @@ import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
 import { Container } from "@chakra-ui/react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { NextauthOptions } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +21,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const serverSession = await getServerSession(authOptions);
+  const serverSession = await getServerSession(NextauthOptions);
 
   return (
     <html>
