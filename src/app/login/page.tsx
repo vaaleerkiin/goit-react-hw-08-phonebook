@@ -31,8 +31,6 @@ export default function Login() {
   const handleShow = () => setShow(!show);
   const toast = useToast();
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const ErrorMessage = searchParams.get("error") || null;
