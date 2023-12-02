@@ -1,7 +1,7 @@
 export type DataType = {
   name: string;
   phone: string;
-  _id: string;
+  id: string;
   email: string;
   favorite: boolean;
 };

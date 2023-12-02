@@ -86,7 +86,7 @@ export const PhonebookModal: React.FC<IProps> = ({
       data &&
       data.some((el) => {
         return (
-          id.toString() !== el._id.toString() &&
+          id.toString() !== el.id.toString() &&
           values.name.toLowerCase() === el.name.toLowerCase()
         );
       })
