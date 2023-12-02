@@ -47,6 +47,7 @@ export default function Register() {
       name: values.name,
       email: values.email,
       password: values.password,
+      callbackUrl,
     });
 
     setLoading(false);
