@@ -28,10 +28,10 @@ export const PhonebookList: React.FC = () => {
               }
               return 0;
             })
-            .map(({ name, phone, id, email, favorite }) => (
+            .map(({ name, phone, _id, email, favorite }) => (
               <PhonebookItem
-                key={id}
-                id={id}
+                key={_id}
+                id={_id}
                 name={name}
                 phone={phone}
                 data={data}
