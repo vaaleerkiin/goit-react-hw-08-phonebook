@@ -29,6 +29,7 @@ export default function Register() {
   const session = useSession();
   const router = useRouter();
   const toast = useToast();
+  const [isLoading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(!show);
@@ -42,32 +43,33 @@ export default function Register() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
-    await signIn("register", {
+    const res = await signIn("register", {
       name: values.name,
       email: values.email,
       password: values.password,
-      callbackUrl: callbackUrl,
-    }).then((res) => {
-      if (res?.error) {
-        toast({
-          position: "top",
-          description: JSON.parse(res.error)?.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-        throw new Error();
-      } else {
-        toast({
-          position: "top",
-          description: "Success",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-      return res;
+      redirect: false,
     });
+
+    if (res?.error) {
+      toast({
+        position: "top",
+        description: "Fail",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        position: "top",
+        description: "Success",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      router.push(callbackUrl);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -157,7 +159,7 @@ export default function Register() {
           <Button
             mt={4}
             colorScheme="blue"
-            isLoading={session.status == "loading"}
+            isLoading={session.status == "loading" || isLoading}
             type="submit"
           >
             Submit

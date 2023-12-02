@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants/BASE_URL";
-import  { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
@@ -18,7 +18,7 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password || !credentials?.name)
           return null;
 
-        const res = await fetch(`${BASE_URL}/users/register`, {
+        const register = await fetch(`${BASE_URL}/users/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -29,10 +29,21 @@ export const authOptions: NextAuthOptions = {
             password: credentials.password,
           }),
         });
-        if (!res.ok) {
-          const resBody = await res.text();
-          throw new Error(resBody);
-        }
+        if (!register.ok) return null;
+
+        const res = await fetch(`${BASE_URL}/users/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        });
+
+        if (!res.ok) return null;
+
         const user = await res.json();
         return user;
       },
@@ -57,10 +68,9 @@ export const authOptions: NextAuthOptions = {
             password: credentials.password,
           }),
         });
-        if (!res.ok) {
-          const resBody = await res.text();
-          throw new Error(resBody);
-        }
+
+        if (!res.ok) return null;
+
         const user = await res.json();
         return user;
       },
@@ -68,7 +78,6 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/login",
-    error: "/error",
   },
   callbacks: {
     async jwt({ token, user }) {
