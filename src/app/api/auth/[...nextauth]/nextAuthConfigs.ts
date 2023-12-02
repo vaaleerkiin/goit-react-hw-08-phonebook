@@ -29,7 +29,11 @@ export const authOptions: NextAuthOptions = {
             password: credentials.password,
           }),
         });
-        if (!register.ok) return null;
+        if (!register.ok) {
+          const resBody = await register.text();
+          const { message } = JSON.parse(resBody);
+          throw new Error(message);
+        }
 
         const res = await fetch(`${BASE_URL}/users/login`, {
           method: "POST",
@@ -42,7 +46,11 @@ export const authOptions: NextAuthOptions = {
           }),
         });
 
-        if (!res.ok) return null;
+        if (!res.ok) {
+          const resBody = await res.text();
+          const { message } = JSON.parse(resBody);
+          throw new Error(message);
+        }
 
         const user = await res.json();
         return user;
@@ -69,7 +77,11 @@ export const authOptions: NextAuthOptions = {
           }),
         });
 
-        if (!res.ok) return null;
+        if (!res.ok) {
+          const resBody = await res.text();
+          const { message } = JSON.parse(resBody);
+          throw new Error(message);
+        }
 
         const user = await res.json();
         return user;
@@ -78,6 +90,7 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/login",
+    error: "/login",
   },
   callbacks: {
     async jwt({ token, user }) {

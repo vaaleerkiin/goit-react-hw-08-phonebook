@@ -47,27 +47,7 @@ export default function Register() {
       name: values.name,
       email: values.email,
       password: values.password,
-      redirect: false,
     });
-
-    if (res?.error) {
-      toast({
-        position: "top",
-        description: "Fail",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        position: "top",
-        description: "Success",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      router.push(callbackUrl);
-    }
 
     setLoading(false);
   };

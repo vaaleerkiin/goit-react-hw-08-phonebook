@@ -14,8 +14,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -32,8 +32,10 @@ export default function Login() {
   const toast = useToast();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const ErrorMessage = searchParams.get("error") || null;
 
   const {
     handleSubmit,
@@ -43,33 +45,25 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
     setLoading(true);
-    const res = await signIn("login", {
+    await signIn("login", {
       email: values.email,
       password: values.password,
-      redirect: false,
+      callbackUrl,
     });
-
-    if (res?.error) {
-      toast({
-        position: "top",
-        description: "Fail",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        position: "top",
-        description: "Success",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      router.push(callbackUrl);
-    }
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (!ErrorMessage) return;
+    toast({
+      position: "top",
+      description: ErrorMessage,
+      status: "error",
+      duration: 9000,
+      isClosable: true,
+    });
+  }, [ErrorMessage, toast]);
 
   return (
     <Container as="section" pt="50px" minH="calc(100vh - 128px)">
