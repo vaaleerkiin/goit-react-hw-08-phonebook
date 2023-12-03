@@ -28,7 +28,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Provides>
           <Header serverSession={serverSession} />
-          <Container bgColor="#e3e3e3" as="main" minW="100%">
+          <Container bgColor="#e3e3e3" as="main" minW="100%" p="0px">
             {children}
           </Container>
           <Footer></Footer>

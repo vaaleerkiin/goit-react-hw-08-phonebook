@@ -14,7 +14,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { signIn, useSession } from "next-auth/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -33,7 +33,6 @@ export default function Login() {
   const searchParams = useSearchParams();
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
-  const ErrorMessage = searchParams.get("error") || null;
 
   const {
     handleSubmit,
@@ -51,17 +50,6 @@ export default function Login() {
 
     setLoading(false);
   };
-
-  useEffect(() => {
-    if (!ErrorMessage) return;
-    toast({
-      position: "top",
-      description: ErrorMessage,
-      status: "error",
-      duration: 9000,
-      isClosable: true,
-    });
-  }, [ErrorMessage, toast]);
 
   return (
     <Container as="section" pt="50px" minH="calc(100vh - 128px)">
