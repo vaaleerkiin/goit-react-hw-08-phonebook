@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 
-import {
-  useGetContactsQuery,
-  useAddContactsMutation,
-  useEditContactsMutation,
-} from "@/redux/contacts/operations";
+import { useEditContactsMutation } from "@/redux/contacts/operations";
 
 import {
   Button,

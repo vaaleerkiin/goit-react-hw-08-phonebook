@@ -7,15 +7,7 @@ import {
 import { PhonebookModal } from "./PhonebookModal";
 import { DataType } from "@/types/dataType";
 
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Stack,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, Flex, HStack, Text, useToast } from "@chakra-ui/react";
 import { StarIcon, PhoneIcon, EmailIcon } from "@chakra-ui/icons";
 
 interface IProps {

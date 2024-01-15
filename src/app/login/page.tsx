@@ -11,11 +11,10 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  useToast,
 } from "@chakra-ui/react";
 import { signIn, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -29,7 +28,7 @@ export default function Login() {
   const [show, setShow] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const handleShow = () => setShow(!show);
-  const toast = useToast();
+
   const searchParams = useSearchParams();
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";

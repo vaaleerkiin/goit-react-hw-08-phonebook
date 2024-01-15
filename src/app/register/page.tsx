@@ -11,10 +11,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  useToast,
 } from "@chakra-ui/react";
 import { signIn, useSession } from "next-auth/react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -27,8 +26,7 @@ type Inputs = {
 
 export default function Register() {
   const session = useSession();
-  const router = useRouter();
-  const toast = useToast();
+
   const [isLoading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const [show, setShow] = useState(false);
@@ -43,7 +41,8 @@ export default function Register() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
-    const res = await signIn("register", {
+    setLoading(true);
+    await signIn("register", {
       name: values.name,
       email: values.email,
       password: values.password,

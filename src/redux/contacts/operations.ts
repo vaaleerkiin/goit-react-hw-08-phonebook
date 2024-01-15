@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { DataType } from "@/types/dataType";
 import { FormType } from "@/types/FormType";
-import { getSession } from "next-auth/react";
+
 import { BASE_URL } from "@/constants/BASE_URL";
 import { axiosBaseQuery } from "@/axiosBaseQuery";
 

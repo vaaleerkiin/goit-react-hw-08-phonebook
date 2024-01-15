@@ -5,11 +5,11 @@ import { PhonebookItem } from "./PhonebookItem";
 import { RootState } from "@/redux/store";
 import { useGetContactsQuery } from "@/redux/contacts/operations";
 import React, { useMemo } from "react";
-import { useToast, VStack, Spinner, Flex } from "@chakra-ui/react";
+import { VStack, Spinner, Flex } from "@chakra-ui/react";
 
 export const PhonebookList: React.FC = () => {
   const filter = useSelector((state: RootState) => state.filter);
-  const toast = useToast();
+
   const { data, isLoading } = useGetContactsQuery();
 
   const contatctList = useMemo(
